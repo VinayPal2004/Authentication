@@ -44,3 +44,37 @@ export const registerUser = async(req,res)=>{
      
   }
   }
+  export const loginUser = async (req, res) => {
+    try {
+        let { email, password } = req.body;
+        email = email.toLowerCase();
+
+        const user = await User.findOne({ email }).select('+password');
+        if (!user) {
+            return res.status(400).json({ message: "User not found" });
+        }
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(400).json({ message: "Invalid password" });
+        }
+
+        const token = generateToken(user._id);
+
+        res.cookie("token", token, {
+        httpOnly: true,
+        secure: false,      // MUST be false on localhost
+        sameSite: "lax",    // 🔥 KEY FIX
+        maxAge: 7 * 24 * 60 * 60 * 1000
+});
+
+        return res.status(200).json({
+            message: "Login successful",
+            user: { id: user._id, name: user.name, email: user.email }
+        });
+
+    } catch (error) {
+        console.error("Login error:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
