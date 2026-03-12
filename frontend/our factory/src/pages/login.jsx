@@ -2,8 +2,8 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import bg from '../assets/bg.png'
-import ourbuilder from '../assets/ourbuilder.png'
+import bglogin from '../assets/login.png'
+import logo from '../assets/servicehub.png'
 import {AuthDataContext} from '../context/Authcontext.jsx'
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";    
@@ -32,6 +32,7 @@ function Login () {
       console.log(response.data);
       
       toast.success("Login successful!");
+      navigate("/");
     } catch (error) {
       
       toast.error("Login failed!");
@@ -41,84 +42,114 @@ function Login () {
   }
     
   return (
-    <div className="bg-cover bg-center h-screen flex items-center justify-center" style={{ backgroundImage: `url(${bg})` }}>
-        <div className="bg-white bg-opacity-80 p-8 rounded-2xl shadow-lg w-full max-w-md ml-120 ">
+<div className="min-h-screen flex bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900">
 
-           <img  className="mx-auto h-40 " src={ourbuilder} alt="Our Builder" />
-            <h2 className="text-2xl font-bold mb-6 text-center text-green-500">Login </h2>
-            <form onSubmit={handleLogin}>
-               
-            <div className="mb-2">
+  {/* LEFT IMAGE SECTION */}
+  <div
+    className="hidden md:flex w-1/2 relative bg-cover bg-center"
+    style={{ backgroundImage: `url(${bglogin})` }}
+  >
 
-             <label className="block text-gray-700 font-bold mb-2" htmlFor="username">
-                    Email
-                  </label>
-                  <input
-              type="text"
-              placeholder="Enter your email"
-              onChange={(e)=>{setEmail(e.target.value)}}
-              value={email}
-              className="w-full px-4 py-3 border border-gray-300 rounded-3xl focus:outline-none focus:ring-2 focus:ring-yellow-400 text-base font-medium bg-white/5 text-grey-700"
-            />
-            </div>
+    {/* Dark overlay */}
+    <div className="absolute inset-0bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900"></div>
 
-            <div className="mb-2 relative">
+    <div className="relative z-10 flex flex-col justify-center items-center text-center text-white px-12">
 
-             <label className="block text-gray-700 font-bold mb-2" htmlFor="username">
-                    Password
-                  </label>
-                  <input
-              type={showPassword ? "text" : "password"}
-              placeholder="Enter your password"
-              onChange={(e)=>{setPassword(e.target.value)}}
-              value={password}
-              className="w-full px-4 py-3 border border-gray-300 rounded-3xl focus:outline-none focus:ring-2 focus:ring-yellow-400 text-base font-medium bg-white/5 text-grey-700"
-            />
-            <span
-              className="absolute right-6 top-12 cursor-pointer text-grey text-xl"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
-            </span>
-            </div>
-            
-            
-            
-            
-               
-                <button className="w-full bg-[#0077b6] text-white font-bold py-3 px-4 rounded-3xl hover:bg-[#005f87] focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                type='submit'>Login</button>
+     
+     
 
-                 <p className="text-sm text-black/80 text-center mb-4">
-            Don't have an account?{" "}
-            <span
-              className="text-purple-400 cursor-pointer"
-              onClick={()=>{navigate('/signup')
-              }}
-            >
-              signup
-            </span>
-          </p>
-
-          {/* Google Register */}
-          <button
-            type="button"
-           
-            className="w-full bg-white text-black py-3 rounded-3xl flex items-center justify-center gap-3 font-semibold hover:bg-gray-200"
-          >
-            <img
-              src="https://developers.google.com/identity/images/g-logo.png"
-              alt="google"
-              className="w-5 h-5"
-            />
-            Continue with Google
-          </button>
-              </form>
-              <ToastContainer />
-            </div>
-      
     </div>
-  )
+
+  </div>
+
+  {/* RIGHT FORM SECTION */}
+  <div className="flex w-full md:w-1/2 items-center justify-center px-6">
+
+    <div className="bg-slate-900/80 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-slate-800 w-full max-w-md">
+
+      <img
+        className="mx-auto h-20 mb-4"
+        src={logo}
+        alt="ServiceHub Logo"
+      />
+
+      <h2 className="text-2xl font-bold mb-6 text-center text-blue-400">
+        Login
+      </h2>
+
+      <form onSubmit={handleLogin} className="space-y-4">
+
+        {/* Email */}
+        <input
+          type="email"
+          placeholder="Enter your email"
+          onChange={(e)=>setEmail(e.target.value)}
+          value={email}
+          className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-gray-200"
+        />
+
+        {/* Password */}
+        <div className="relative">
+
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Enter your password"
+            onChange={(e)=>setPassword(e.target.value)}
+            value={password}
+            className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-gray-200"
+          />
+
+          <span
+            className="absolute right-4 top-3 cursor-pointer text-gray-400 text-xl"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
+          </span>
+
+        </div>
+
+        {/* Login Button */}
+        <button
+          type="submit"
+          className="w-full bg-blue-600 py-3 rounded-xl font-semibold hover:bg-blue-700"
+        >
+          {loading ? "Logging in..." : "Login"}
+        </button>
+
+        {/* Signup */}
+        <p className="text-sm text-gray-400 text-center">
+          Don't have an account?{" "}
+          <span
+            className="text-blue-400 cursor-pointer"
+            onClick={()=>navigate('/signup')}
+          >
+            Signup
+          </span>
+        </p>
+
+        {/* Google Login */}
+        <button
+          type="button"
+          className="w-full bg-white text-black py-3 rounded-xl flex items-center justify-center gap-3 font-semibold hover:bg-gray-200"
+        >
+          <img
+            src="https://developers.google.com/identity/images/g-logo.png"
+            alt="google"
+            className="w-5 h-5"
+          />
+          Continue with Google
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  <ToastContainer />
+
+</div>
+);
 }
 
 export default Login
