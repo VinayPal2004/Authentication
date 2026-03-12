@@ -27,7 +27,7 @@ function Landing() {
       </nav>
 
       {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center text-center h-[70vh] bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 px-6">
+      <section className="flex flex-col items-center justify-center text-center h-[70vh] bg-[gradient-to-r from-slate-900 via-blue-950 to-slate-900] px-6">
 
         <h1 className="text-5xl font-bold mb-4">
           Find Trusted Services Near You

@@ -2,13 +2,13 @@ import validator from 'validator';
 import User from '../model/usermodel.js';
 import  generateToken  from '../config/token.js';
 import bcrypt from 'bcryptjs';
-import cookie from 'cookie-parser';
+
 
 
 export const registerUser = async(req,res)=>{
   try {
-    const {name,email,password}= req.body;
-    if (!name||!email||!password){
+    const {name,email,password,role}= req.body;
+    if (!name||!email||!password||!role){
       return res.status(400).json({message:"Please fill all the fields"})
     }
     if(password.length <8){
@@ -25,7 +25,8 @@ export const registerUser = async(req,res)=>{
     const user = await User.create({
       name,
       email,
-      password :hashedPassword
+      password :hashedPassword,
+      role
     });
      const token = await generateToken(user._id);
      res.cookie('token',token,
@@ -33,9 +34,9 @@ export const registerUser = async(req,res)=>{
         httpOnly:true,
         secure:false,
         sameSite:'strict',
-        maxage:7*24*60*60*1000
+        maxAge:7*24*60*60*1000
       })
-      res.status(201).json({message:"User registered successfully",token})
+      res.status(201).json({message:"User registered successfully",token,user:{id:user._id,name:user.name,email:user.email,role:user.role}});
      
 
   } catch (error) {
@@ -70,7 +71,7 @@ export const registerUser = async(req,res)=>{
 
         return res.status(200).json({
             message: "Login successful",
-            user: { id: user._id, name: user.name, email: user.email }
+            user: { id: user._id, name: user.name, email: user.email, role: user.role },
         });
 
     } catch (error) {

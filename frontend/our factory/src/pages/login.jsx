@@ -32,7 +32,14 @@ function Login () {
       console.log(response.data);
       
       toast.success("Login successful!");
-      navigate("/");
+        const Role=response.data.user.role;
+      if(Role==="provider"){
+        navigate("/provider");
+      }
+      else{
+        navigate("/user");
+      }
+      
     } catch (error) {
       
       toast.error("Login failed!");

@@ -1,5 +1,6 @@
 import React from "react";
 import logo from "../assets/servicehub.png";
+import { useNavigate } from "react-router-dom";
 
 function ProviderDashboard() {
 
@@ -17,6 +18,7 @@ function ProviderDashboard() {
       date: "13 March"
     }
   ];
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white">
@@ -25,8 +27,8 @@ function ProviderDashboard() {
       <nav className="flex justify-between items-center px-10 py-4 border-b border-slate-800">
 
         <div className="flex items-center gap-3">
-          <img src={logo} className="h-10" />
-          <h1 className="text-xl font-bold text-blue-400">
+          <img src={logo} className="h-10 cursor-pointer" onClick={()=>{navigate('/')}}/>
+          <h1 className="text-xl font-bold text-blue-400 cursor-pointer" onClick={()=>{navigate('/')}}>
             ServiceHub Provider
           </h1>
         </div>
