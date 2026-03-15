@@ -1,0 +1,40 @@
+ {/* Dropdown */}
+      {open && (
+        <div className="absolute right-0 mt-3 w-44 bg-slate-900 border border-slate-700 rounded-lg shadow-lg">
+
+          <button
+            onClick={() => navigate("/user/profile")}
+            className="block w-full text-left px-4 py-2 hover:bg-slate-800"
+          >
+            View Profile
+          </button>
+
+          <button
+            onClick={() => navigate("/user/edit-profile")}
+            className="block w-full text-left px-4 py-2 hover:bg-slate-800"
+          >
+            Edit Profile
+          </button>
+
+          <button
+            onClick={() => navigate("/my-bookings")}
+            className="block w-full text-left px-4 py-2 hover:bg-slate-800"
+          >
+            My Bookings
+          </button>
+
+          <button
+            onClick={() => {
+              localStorage.clear();
+              navigate("/login");
+            }}
+            className="block w-full text-left px-4 py-2 text-red-400 hover:bg-slate-800"
+          >
+            Logout
+          </button>
+
+        </div>
+      )}
+
+    </div>
+  );

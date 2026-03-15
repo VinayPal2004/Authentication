@@ -44,17 +44,27 @@ function Registeration() {
       );
 
       toast.success("Registration successful!");
-      const Role=response.data.user.role;
-      if(Role==="provider"){
-        navigate("/provider");
-      }
-      else{
-        navigate("/user");
-      }
+      console.log(response.data);
+      
+
+setTimeout(() => {
+  const role = response.data.user.role;
+
+  if(role === "provider"){
+    navigate("/provider");
+  } else {
+    navigate("/user");
+  }
+}, 1500);
       
 
     } catch (error) {
-      toast.error("Registration failed!");
+      if(error.response.data.message){
+        toast.error(error.response.data.message);
+      }
+      else{
+        toast.error("Registration failed. Please try again.");
+      }
     } finally {
       setLoading(false);
     }

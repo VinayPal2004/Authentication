@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
     try {
         return jwt.sign({UserId},process.env.JWT_SECRET, {expiresIn:'7d'})
     } catch (error) {
-        console.log("token not generated");
+        console.log("token not generated from token.js");
         
         
     }

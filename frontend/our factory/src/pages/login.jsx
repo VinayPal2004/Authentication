@@ -6,15 +6,18 @@ import bglogin from '../assets/login.png'
 import logo from '../assets/servicehub.png'
 import {AuthDataContext} from '../context/Authcontext.jsx'
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";    
+import { useNavigate } from "react-router-dom";   
+import { userDataContext } from "../context/Usercontext.jsx"; 
 
 function Login () {
   const [showPassword, setShowPassword] = useState(false);
+  // const {getCurrentUser} = useContext(UserDataContext)
  
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const{serverUrl} = useContext(AuthDataContext);
+  const {getCurrentUser} = useContext(userDataContext)
   const [loading, setLoading] = useState(false);
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -29,16 +32,23 @@ function Login () {
         password
       }
       ,{withCredentials:true});
-      console.log(response.data);
-      
+       console.log(response.data);
+     
       toast.success("Login successful!");
-        const Role=response.data.user.role;
-      if(Role==="provider"){
-        navigate("/provider");
-      }
-      else{
-        navigate("/user");
-      }
+      getCurrentUser()
+      
+      
+       
+
+setTimeout(() => {
+  const role = response.data.user.role;
+
+  if(role === "provider"){
+    navigate("/provider");
+  } else {
+    navigate("/user");
+  }
+}, 1500);
       
     } catch (error) {
       

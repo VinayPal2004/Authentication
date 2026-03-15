@@ -10,11 +10,11 @@ function Authcontext({children})
 
   }
   return (
-    <div>
+    
       <AuthDataContext.Provider value={value}>
        {children}
       </AuthDataContext.Provider>
-    </div>
+    
   )
 }
 

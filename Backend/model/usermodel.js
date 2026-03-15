@@ -3,21 +3,27 @@ import mongoose from "mongoose";
 const UserSchema = new mongoose.Schema({
     name:{
         type:String,
-        require:true
+        required:true
     },
     email:{
         type:String,
-        require:true,
+        required:true,
         unique:true
     },
     password:{
         type:String,
-        require:true
+        required:true
     },
     role:{
   type:String,
   enum:["user","provider","admin"],
   default:"user"
+},
+phone: {
+  type: String
+},
+address: {
+  type: String
 }
 },{timestamps:true})
 const User = mongoose.model('User',UserSchema);

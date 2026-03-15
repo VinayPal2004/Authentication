@@ -3,7 +3,6 @@ import logo from "../assets/servicehub.png";
 import { useNavigate } from "react-router-dom";
 
 function ProviderDashboard() {
-
   const requests = [
     {
       name: "Rahul Sharma",
@@ -36,7 +35,9 @@ function ProviderDashboard() {
         <div className="flex gap-6 items-center">
           <button className="hover:text-blue-400">Dashboard</button>
           <button className="hover:text-blue-400">My Jobs</button>
-          <button className="hover:text-blue-400">Profile</button>
+          <button className="hover:text-blue-400">
+            
+          </button>
 
           <button className="bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700">
             Logout
