@@ -35,7 +35,7 @@ function Login () {
        console.log(response.data);
      
       toast.success("Login successful!");
-      getCurrentUser()
+      await getCurrentUser()
       
       
        

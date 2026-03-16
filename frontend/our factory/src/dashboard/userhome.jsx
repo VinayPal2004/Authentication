@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import logo from "../assets/servicehub.png";
 import { useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
+import { userDataContext } from "../context/Usercontext";
 
 
 function UserHome() {
@@ -15,6 +16,10 @@ function UserHome() {
   ];
 
  const navigate = useNavigate();
+ const [open , setOpen] = useState(false);
+ const {userData} = useContext(userDataContext)
+ console.log("userData",userData);
+ 
 
   
 
@@ -47,10 +52,10 @@ function UserHome() {
               onClick={() => setOpen(!open)}
               className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold cursor-pointer"
             >
-              
+               {userData?.name ? userData.name.charAt(0).toUpperCase() : <CgProfile/>}
             </button>
 
-            { (
+            { open &&(
               <div className="absolute right-0 mt-3 w-44 bg-slate-900 border border-slate-700 rounded-lg shadow-lg z-50">
                 <button
                   onClick={() => navigate("/user/profile")}
@@ -71,9 +76,10 @@ function UserHome() {
                   My Bookings
                 </button>
                 <button
-                  onClick={() => {
-                   
-                    navigate("/login");
+                 onClick={() => {
+                localStorage.removeItem("token")
+                navigate("/login")
+
                   }}
                   className="block w-full text-left px-4 py-2 text-red-400 hover:bg-slate-800"
                 >

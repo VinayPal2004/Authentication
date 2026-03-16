@@ -25,7 +25,7 @@ function Usercontext({ children }) {
 };
 
   useEffect(() => {
-    getCurrentUser();
+  getCurrentUser();
   }, []);
 
   const value = {

@@ -33,7 +33,7 @@ export const registerUser = async(req,res)=>{
       {
         httpOnly:true,
         secure:false,
-        sameSite:'strict',
+        sameSite:'lax',
         maxAge:7*24*60*60*1000
       })
       res.status(201).json({message:"User registered successfully",token,user:{id:user._id,name:user.name,email:user.email,role:user.role}});
