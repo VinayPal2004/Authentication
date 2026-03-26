@@ -19,11 +19,19 @@ const UserSchema = new mongoose.Schema({
   enum:["user","provider","admin"],
   default:"user"
 },
-phone: {
-  type: String
+Phone: {
+  type: Number
 },
 address: {
   type: String
+},
+avatar: {
+  type: String,
+  default: ""
+},
+theme: {
+  type: String,
+  default: "dark"
 }
 },{timestamps:true})
 const User = mongoose.model('User',UserSchema);

@@ -19,6 +19,7 @@ app.use(cors({
 }));
 app.use('/api/auth',authRoutes);
 app.use('/api/user/',userRouter)
+app.use("/uploads", express.static("uploads"));
 
 app.listen(Port,()=>{
     console.log(`server is running on port ${Port}`);

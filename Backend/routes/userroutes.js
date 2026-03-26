@@ -1,11 +1,20 @@
 import express from 'express';
 import isAuth from '../middleware/isAuth.js';
-import { getCurrentUser } from '../controller/usercontroller.js';
+import { getCurrentUser , editProfile} from '../controller/usercontroller.js';
+import { upload } from "../middleware/multer.js";
+import User from "../model/usermodel.js";
 
+export const userRouter = express.Router();
 
- export const userRouter = express.Router();
-
+// Get current user
 userRouter.get("/users", isAuth, getCurrentUser);
 
+// Edit profile (including avatar)
+userRouter.post(
+  "/edit-profile",
+  isAuth,
+  upload.single("avatar"),
+  editProfile
+);
 
 export default userRouter;

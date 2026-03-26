@@ -12,6 +12,8 @@ const isAuth = (req, res, next) => {
             return res.status(401).json({ message: "Unauthorized" });
         }
         req.userId = verifytoken.id;
+        console.log('user',req.userId);
+        
         next();
     } catch (error) {
         console.error("Authentication error:", error);

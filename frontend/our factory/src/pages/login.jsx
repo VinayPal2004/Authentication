@@ -11,7 +11,7 @@ import { userDataContext } from "../context/Usercontext.jsx";
 
 function Login () {
   const [showPassword, setShowPassword] = useState(false);
-  // const {getCurrentUser} = useContext(UserDataContext)
+ 
  
   const [email, setEmail] = useState("");
   const navigate = useNavigate();

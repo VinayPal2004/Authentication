@@ -7,12 +7,13 @@ import logo from "../assets/servicehub.png";
 import { AuthDataContext } from "../context/Authcontext.jsx";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { userDataContext } from "../context/Usercontext.jsx";
 
 function Registeration() {
 
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-
+  const {getCurrentUser} =useContext(userDataContext)
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,7 +46,7 @@ function Registeration() {
 
       toast.success("Registration successful!");
       console.log(response.data);
-      
+      await getCurrentUser()
 
 setTimeout(() => {
   const role = response.data.user.role;

@@ -12,3 +12,29 @@ export const getCurrentUser = async (req, res) => {
         return res.status(500).json({ message: "Internal server error (usercontroller)" }); 
     }
 }
+export const editProfile = async (req, res) => {
+  try {
+    const { name, email,Phone,address} = req.body;
+
+    let updateData = { name, email,Phone,address };
+
+    // 👇 avatar aaya toh add karo
+    if (req.file) {
+      updateData.avatar = req.file.filename;
+    }
+
+    const user = await User.findByIdAndUpdate(
+      req.userId,
+      updateData,
+      { new: true }
+    ).select("-password");
+
+    res.status(200).json({
+      message: "Profile updated",
+      user,
+    });
+
+  } catch (error) {
+    res.status(500).json({ message: "Update failed" });
+  }
+};

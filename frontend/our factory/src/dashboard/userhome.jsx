@@ -48,29 +48,41 @@ function UserHome() {
 
           {/* Avatar + Dropdown */}
           <div className="relative">
-            <button
-              onClick={() => setOpen(!open)}
-              className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold cursor-pointer"
-            >
-               {userData?.name ? userData.name.charAt(0).toUpperCase() : <CgProfile/>}
-            </button>
+           <button
+  onClick={() => setOpen(!open)}
+  className="w-10 h-10 rounded-full overflow-hidden bg-blue-600 flex items-center justify-center cursor-pointer"
+>
+  {userData?.avatar ? (
+    <img
+      src={`http://localhost:8400/uploads/${userData.avatar}`}
+      className="w-full h-full object-cover"
+    />
+  ) : (
+    <span className="text-white font-bold">
+      {userData?.name?.charAt(0).toUpperCase()}
+    </span>
+  )}
+</button>
 
             { open &&(
               <div className="absolute right-0 mt-3 w-44 bg-slate-900 border border-slate-700 rounded-lg shadow-lg z-50">
                 <button
-                  onClick={() => navigate("/user/profile")}
+                  onClick={() => navigate("/profile")}
                   className="block w-full text-left px-4 py-2 hover:bg-slate-800"
                 >
                   View Profile
                 </button>
                 <button
-                  onClick={() => navigate("/user/edit-profile")}
-                  className="block w-full text-left px-4 py-2 hover:bg-slate-800"
-                >
-                  Edit Profile
-                </button>
+                onClick={() => {
+                  setOpen(false);
+                  navigate("/edit");
+                }}
+                className="block w-full text-left px-4 py-2 hover:bg-slate-800"
+              >
+                Edit Profile
+              </button>
                 <button
-                  onClick={() => navigate("/my-bookings")}
+                  onClick={() => navigate("/bookings")}
                   className="block w-full text-left px-4 py-2 hover:bg-slate-800"
                 >
                   My Bookings
