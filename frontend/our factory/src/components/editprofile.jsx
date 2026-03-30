@@ -16,13 +16,11 @@ function EditProfile() {
     Phone: "",
     address: "",
     theme: "dark",
-    avatar:"",
   });
 
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState("");
 
-  // ✅ Load user data properly
   useEffect(() => {
     if (userData) {
       setForm({
@@ -38,12 +36,10 @@ function EditProfile() {
     }
   }, [userData]);
 
-  // ✅ Handle input change (clean way)
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // ✅ File change
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
     if (selected) {
@@ -52,7 +48,6 @@ function EditProfile() {
     }
   };
 
-  // ✅ Submit
   const handleSubmit = async () => {
     try {
       const formData = new FormData();
@@ -66,7 +61,7 @@ function EditProfile() {
       }
 
       const res = await axios.post(
-        `${serverUrl}/api/user/uedit-profile`,
+        `${serverUrl}/api/user/useredit-profile`,
         formData,
         {
           withCredentials: true,
@@ -77,51 +72,43 @@ function EditProfile() {
       );
 
       setUserData(res.data.user);
-      setPreview(`${serverUrl}/uploads/${res.data.user.avatar}`);
       toast.success("Profile updated successfully");
 
-      setTimeout(() => {
-       
-        navigate("/user");
-      
-      }, 1500);
+      setTimeout(() => navigate("/user"), 1200);
 
     } catch (error) {
-      console.error(error.response?.data || error.message);
+      console.log(error.response?.data || error.message);
       toast.error(error.response?.data?.message || "Update failed");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-900 text-white">
-      <div className="bg-slate-800 p-8 rounded-xl w-96 text-center">
+    <div className="min-h-screen flex items-center justify-center bg-slate-900 text-white px-4">
 
-        {/* Avatar */}
-        <label className="cursor-pointer">
+      <div className="bg-slate-800 p-6 md:p-8 rounded-xl w-full max-w-md text-center">
+
+        {/* AVATAR */}
         <div className="mb-4">
           <img
             src={preview || "https://via.placeholder.com/100"}
-            alt="avatar"
-           
-            className="w-24 h-24  cursor-pointer rounded-full mx-auto object-cover border-2 border-blue-400"
+            className="w-24 h-24 rounded-full mx-auto object-cover border-2 border-blue-400"
           />
         </div>
 
-       <label className="cursor-pointer bg-blue-600 px-4 py-2 rounded inline-block">
-  Choose image
-  <input
-    type="file"
-    onChange={handleFileChange}
-    className="hidden"
-  />
-</label>
-</label>
+        <label className="cursor-pointer bg-blue-600 px-4 py-2 rounded inline-block">
+          Choose Image
+          <input
+            type="file"
+            onChange={handleFileChange}
+            className="hidden"
+          />
+        </label>
 
-<p className="mt-2 text-sm text-gray-400">
-  {file ? file.name : "No file selected"}
-</p>
+        <p className="mt-2 text-sm text-gray-400">
+          {file ? file.name : "No file selected"}
+        </p>
 
-        {/* Inputs */}
+        {/* INPUTS */}
         <input
           type="text"
           name="name"
@@ -161,12 +148,13 @@ function EditProfile() {
 
         <button
           onClick={handleSubmit}
-          className="w-full mt-4 bg-blue-600 py-2 rounded hover:bg-blue-700"
+          className="w-full mt-5 bg-blue-600 py-2 rounded hover:bg-blue-700"
         >
           Save Changes
         </button>
 
       </div>
+
       <ToastContainer />
     </div>
   );

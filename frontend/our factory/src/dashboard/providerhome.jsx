@@ -13,7 +13,7 @@ function ProviderDashboard() {
   const { userData } = useContext(userDataContext);
   const { serverUrl } = useContext(AuthDataContext);
 
-  // 🔥 Fetch requests
+  // 🔥 FETCH REQUESTS
   useEffect(() => {
     const fetchRequests = async () => {
       try {
@@ -28,9 +28,9 @@ function ProviderDashboard() {
     };
 
     fetchRequests();
-  }, []);
+  }, [serverUrl]);
 
-  // 🔥 Accept / Reject
+  // 🔥 ACCEPT / REJECT
   const handleAction = async (id, action) => {
     try {
       await axios.post(
@@ -39,7 +39,6 @@ function ProviderDashboard() {
         { withCredentials: true }
       );
 
-      // UI update
       setRequests((prev) =>
         prev.filter((req) => req._id !== id)
       );
@@ -50,130 +49,142 @@ function ProviderDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white">
+    <div className="min-h-screen bg-slate-950 text-white">
 
-      {/* Navbar */}
-      <nav className="flex justify-between items-center px-10 py-4 border-b border-slate-800">
+      <nav className="flex items-center justify-between px-4 md:px-10 py-4 border-b border-slate-800 bg-slate-950">
 
-        <div className="flex items-center gap-3">
-          <img src={logo} className="h-10 cursor-pointer" onClick={() => navigate('/')} />
-          <h1 className="text-xl font-bold text-blue-400 cursor-pointer" onClick={() => navigate('/')}>
-            ServiceHub Provider
-          </h1>
-        </div>
+  {/* LEFT: LOGO */}
+  <div
+    className="flex items-center gap-3 cursor-pointer"
+    onClick={() => navigate('/')}
+  >
+    <img src={logo} className="h-9 md:h-10" />
+    <h1 className="text-sm md:text-xl font-bold text-blue-400">
+      ServiceHub
+    </h1>
+  </div>
 
-        <div className="flex gap-6 items-center relative">
-          <button className="hover:text-blue-400">Dashboard</button>
-          <button className="hover:text-blue-400">My Jobs</button>
+  {/* RIGHT: DASHBOARD + PROFILE */}
+  <div className="flex items-center gap-3 md:gap-5 relative">
 
-          {/* Avatar */}
-          <div className="relative">
-            <button
-              onClick={() => setOpen(!open)}
-              className="w-10 h-10 rounded-full overflow-hidden bg-blue-600 flex items-center justify-center cursor-pointer"
-            >
-              {userData?.avatar ? (
-                <img
-                  src={`${serverUrl}/uploads/${userData.avatar}`}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <span className="text-white font-bold">
-                  {userData?.name?.charAt(0).toUpperCase()}
-                </span>
-              )}
-            </button>
+    {/* DASHBOARD BUTTON */}
+    <button
+      onClick={() => navigate("/provider")}
+      className="text-sm md:text-base hover:text-blue-400"
+    >
+      Dashboard
+    </button>
 
-            {open && (
-              <div className="absolute right-0 mt-3 w-44 bg-slate-900 border border-slate-700 rounded-lg shadow-lg z-50">
+    {/* PROFILE ICON */}
+    <button
+      onClick={() => setOpen(!open)}
+      className="w-10 h-10 rounded-full overflow-hidden bg-blue-600 flex items-center justify-center"
+    >
+      {userData?.avatar ? (
+        <img
+          src={`${serverUrl}/uploads/${userData.avatar}`}
+          className="w-full h-full object-cover"
+        />
+      ) : (
+        <span className="font-bold">
+          {userData?.name?.charAt(0).toUpperCase()}
+        </span>
+      )}
+    </button>
 
-                <button
-                  onClick={() => navigate("/profile")}
-                  className="block w-full text-left px-4 py-2 hover:bg-slate-800"
-                >
-                  View Profile
-                </button>
+    {/* DROPDOWN */}
+    {open && (
+      <div className="absolute right-0 top-12 w-44 bg-slate-900 border border-slate-700 rounded-lg shadow-lg z-50">
 
-                <button
-                  onClick={() => {
-                    setOpen(false);
-                    navigate("/provideredit");
-                  }}
-                  className="block w-full text-left px-4 py-2 hover:bg-slate-800"
-                >
-                  Edit Profile
-                </button>
+        <button
+          onClick={() => navigate("/profile")}
+          className="block w-full text-left px-4 py-2 hover:bg-slate-800"
+        >
+          View Profile
+        </button>
 
-                <button
-                  onClick={() => navigate("/jobs")}
-                  className="block w-full text-left px-4 py-2 hover:bg-slate-800"
-                >
-                  My Jobs
-                </button>
+        <button
+          onClick={() => navigate("/provideredit")}
+          className="block w-full text-left px-4 py-2 hover:bg-slate-800"
+        >
+          Edit Profile
+        </button>
 
-                <button
-                  onClick={() => {
-                    localStorage.removeItem("token");
-                    navigate("/login");
-                  }}
-                  className="block w-full text-left px-4 py-2 text-red-400 hover:bg-slate-800"
-                >
-                  Logout
-                </button>
+        <button
+          onClick={() => navigate("/jobs")}
+          className="block w-full text-left px-4 py-2 hover:bg-slate-800"
+        >
+          My Jobs
+        </button>
 
-              </div>
-            )}
-          </div>
-        </div>
+        <button
+          onClick={() => {
+            localStorage.removeItem("token");
+            navigate("/login");
+          }}
+          className="block w-full text-left px-4 py-2 text-red-400 hover:bg-slate-800"
+        >
+          Logout
+        </button>
 
-      </nav>
+      </div>
+    )}
 
-      {/* Dashboard */}
-      <section className="px-10 py-10">
+  </div>
 
-        <h2 className="text-3xl font-bold mb-8 text-blue-400">
+</nav>
+
+        
+
+      {/* DASHBOARD */}
+      <section className="px-4 md:px-10 py-10">
+
+        <h2 className="text-2xl md:text-3xl font-bold mb-8 text-blue-400">
           Service Requests
         </h2>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        {/* GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
           {requests.length === 0 ? (
-            <p>No requests available</p>
+            <div className="text-center text-gray-400 col-span-full">
+              No requests available
+            </div>
           ) : (
             requests.map((req) => (
               <div
                 key={req._id}
-                className="bg-slate-900 p-6 rounded-xl border border-slate-800"
+                className="bg-slate-900 p-5 md:p-6 rounded-xl border border-slate-800 hover:border-blue-500 transition"
               >
 
-                <h3 className="text-xl font-semibold mb-2">
+                <h3 className="text-lg md:text-xl font-semibold mb-2 text-blue-300">
                   {req.service}
                 </h3>
 
-                <p className="text-gray-400">
+                <p className="text-gray-400 text-sm md:text-base">
                   Customer: {req.name}
                 </p>
 
-                <p className="text-gray-400">
+                <p className="text-gray-400 text-sm md:text-base">
                   Location: {req.location}
                 </p>
 
-                <p className="text-gray-400 mb-4">
+                <p className="text-gray-400 mb-4 text-sm md:text-base">
                   Date: {req.date}
                 </p>
 
-                <div className="flex gap-4">
+                <div className="flex flex-col sm:flex-row gap-3">
 
                   <button
                     onClick={() => handleAction(req._id, "accept")}
-                    className="bg-green-600 px-4 py-2 rounded-lg hover:bg-green-700"
+                    className="bg-green-600 px-4 py-2 rounded-lg hover:bg-green-700 w-full"
                   >
                     Accept
                   </button>
 
                   <button
                     onClick={() => handleAction(req._id, "reject")}
-                    className="bg-red-600 px-4 py-2 rounded-lg hover:bg-red-700"
+                    className="bg-red-600 px-4 py-2 rounded-lg hover:bg-red-700 w-full"
                   >
                     Reject
                   </button>

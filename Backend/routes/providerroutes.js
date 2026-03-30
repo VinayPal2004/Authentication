@@ -16,5 +16,5 @@ providerRouter.post(
   upload.single("avatar"),
   providereditProfile
 );
-providerRouter.get("/electricians", getAllProviders);
+providerRouter.get("/service/:type", getAllProviders);
 export default providerRouter;

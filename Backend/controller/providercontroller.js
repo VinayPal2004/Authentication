@@ -47,11 +47,19 @@ export const providereditProfile = async (req, res) => {
   }
 };
 //get all providers (for user side)
-export const getAllProviders = async(req, res)=>{
+export const getAllProviders = async (req, res) => {
   try {
-    const providers = await User.find({role:"provider", service: "electrician"}).select("-password");
-    res.status(200).json({providers});
+    const { type } = req.params; // 👈 URL se aayega (plumber, electrician)
+
+    const providers = await User.find({
+      role: "provider",
+      service: { $regex: new RegExp(`^${type}$`, "i") } // 👈 dynamic + case ignore
+    }).select("-password");
+
+    res.status(200).json({ providers });
+
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Error fetching providers" });
   }
-}
+};

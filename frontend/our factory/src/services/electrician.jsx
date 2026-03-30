@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { AuthDataContext } from "../context/Authcontext";
+import { CgProfile } from "react-icons/cg";
 
 function ElectricianPage() {
   const { serverUrl } = useContext(AuthDataContext);
@@ -10,7 +11,7 @@ function ElectricianPage() {
     const fetchElectricians = async () => {
       try {
         const res = await axios.get(
-          `${serverUrl}/api/provider/electricians`
+          `${serverUrl}/api/provider/service/electrician`
         );
 
         console.log("API DATA:", res.data); // 🔍 debug
@@ -99,12 +100,15 @@ function ElectricianPage() {
       </div>
 
       {/* RIGHT SIDE AVATAR */}
-      <div>
-        <img
-          src={`http://localhost:8400/uploads/${item.avatar}`}
-          alt="avatar"
-          className="w-40 h-40 rounded-2xl object-cover"
-        />
+        <div className="w-40 h-40 rounded-2xl overflow-hidden bg-slate-700 flex items-center justify-center">
+        {item.avatar ? (
+          <img
+            src={`http://localhost:8400/uploads/${item.avatar}`}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <CgProfile size={40} className="text-white" />
+        )}
       </div>
 
     </div>

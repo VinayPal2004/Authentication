@@ -10,10 +10,10 @@ import { useNavigate } from "react-router-dom";
 import { userDataContext } from "../context/Usercontext.jsx";
 
 function Registeration() {
-
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const {getCurrentUser} =useContext(userDataContext)
+  const { getCurrentUser } = useContext(userDataContext);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,61 +35,57 @@ function Registeration() {
 
       const response = await axios.post(
         `${serverUrl}/api/auth/signup`,
-        {
-          name,
-          email,
-          password,
-          role,
-        },
+        { name, email, password, role },
         { withCredentials: true }
       );
 
       toast.success("Registration successful!");
-      console.log(response.data);
-      await getCurrentUser()
+      await getCurrentUser();
 
-setTimeout(() => {
-  const role = response.data.user.role;
+      setTimeout(() => {
+        const userRole = response.data.user.role;
 
-  if(role === "provider"){
-    navigate("/provider");
-  } else {
-    navigate("/user");
-  }
-}, 1500);
-      
+        if (userRole === "provider") {
+          navigate("/provider");
+        } else {
+          navigate("/user");
+        }
+      }, 1000);
 
     } catch (error) {
-      if(error.response.data.message){
-        toast.error(error.response.data.message);
-      }
-      else{
-        toast.error("Registration failed. Please try again.");
-      }
+      toast.error(
+        error?.response?.data?.message || "Registration failed"
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900">
+    <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900">
 
-      {/* LEFT IMAGE SECTION */}
-     <div
-  className="hidden md:flex w-1/2 items-center justify-center 
- bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900bg-no-repeat bg-center bg-contain"
-  style={{ backgroundImage: `url(${bgsignup})` }}
->
-</div>
+      {/* LEFT IMAGE */}
+      <div
+        className="hidden md:flex w-1/2 relative bg-cover bg-center"
+        style={{ backgroundImage: `url(${bgsignup})` }}
+      >
 
+        {/* BLEND OVERLAY */}
+        <div className="absolute inset-0 "></div>
 
-      {/* RIGHT FORM SECTION */}
-      <div className="flex w-full md:w-1/2 items-center justify-center px-6">
+        <div className="relative z-10 flex items-center justify-center w-full">
+        </div>
 
-        <div className="bg-slate-900/80 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-slate-800 w-full max-w-md">
+      </div>
 
+      {/* RIGHT FORM */}
+      <div className="flex w-full md:w-1/2 items-center justify-center px-4 py-10 md:px-6">
+
+        <div className="bg-slate-900/80 backdrop-blur-md p-6 md:p-8 rounded-2xl shadow-2xl border border-slate-800 w-full max-w-md">
+
+          {/* LOGO */}
           <img
-            className="mx-auto h-20 mb-4"
+            className="mx-auto h-16 md:h-20 mb-4"
             src={logo}
             alt="ServiceHub Logo"
           />
@@ -100,25 +96,25 @@ setTimeout(() => {
 
           <form onSubmit={handleRegister} className="space-y-4">
 
-            {/* Name */}
+            {/* NAME */}
             <input
               type="text"
               placeholder="Enter your name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-gray-200"
+              className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-gray-200 outline-none"
             />
 
-            {/* Email */}
+            {/* EMAIL */}
             <input
               type="email"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-gray-200"
+              className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-gray-200 outline-none"
             />
 
-            {/* Password */}
+            {/* PASSWORD */}
             <div className="relative">
 
               <input
@@ -126,7 +122,7 @@ setTimeout(() => {
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-gray-200"
+                className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-gray-200 outline-none"
               />
 
               <span
@@ -138,24 +134,26 @@ setTimeout(() => {
 
             </div>
 
-            {/* Role */}
+            {/* ROLE */}
             <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-gray-200"
+              className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-gray-200 outline-none"
             >
               <option value="user">User</option>
               <option value="provider">Service Provider</option>
             </select>
 
-            {/* Button */}
+            {/* BUTTON */}
             <button
               type="submit"
-              className="w-full bg-blue-600 py-3 rounded-xl font-semibold hover:bg-blue-700"
+              disabled={loading}
+              className="w-full bg-blue-600 py-3 rounded-xl font-semibold hover:bg-blue-700 disabled:opacity-60 transition"
             >
               {loading ? "Creating..." : "Create Account"}
             </button>
 
+            {/* LOGIN LINK */}
             <p className="text-sm text-gray-400 text-center">
               Already have an account?{" "}
               <span
@@ -173,7 +171,6 @@ setTimeout(() => {
       </div>
 
       <ToastContainer />
-
     </div>
   );
 }
