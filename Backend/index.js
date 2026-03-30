@@ -4,6 +4,7 @@ import connectDB from './config/db.js';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authroutes.js';
 import userRouter from './routes/userroutes.js';
+import providerRouter from './routes/providerroutes.js';
  import cors from 'cors';
 
 
@@ -19,6 +20,7 @@ app.use(cors({
 }));
 app.use('/api/auth',authRoutes);
 app.use('/api/user/',userRouter)
+app.use('/api/provider/',providerRouter) // provider routes are in providerRouter
 app.use("/uploads", express.static("uploads"));
 
 app.listen(Port,()=>{

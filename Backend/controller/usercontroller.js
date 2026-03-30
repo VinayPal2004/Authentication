@@ -38,3 +38,7 @@ export const editProfile = async (req, res) => {
     res.status(500).json({ message: "Update failed" });
   }
 };
+
+
+//bok provider
+

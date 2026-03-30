@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { AuthDataContext } from "../context/Authcontext";
 import "react-toastify/dist/ReactToastify.css";
 
-function EditProfile() {
+function ProviderEditProfile() {
   const { userData, setUserData } = useContext(userDataContext);
   const { serverUrl } = useContext(AuthDataContext);
   const navigate = useNavigate();
@@ -17,6 +17,9 @@ function EditProfile() {
     address: "",
     theme: "dark",
     avatar:"",
+    service: "",
+    fee : "",
+    experience: ""
   });
 
   const [file, setFile] = useState(null);
@@ -30,6 +33,9 @@ function EditProfile() {
         Phone: userData.Phone || "",
         address: userData.address || "",
         theme: userData.theme || "dark",
+        service: userData.service || "",
+        fee: userData.fee || "",
+        experience: userData.experience || ""
       });
 
       if (userData.avatar) {
@@ -57,16 +63,21 @@ function EditProfile() {
     try {
       const formData = new FormData();
 
-      Object.keys(form).forEach((key) => {
-        formData.append(key, form[key]);
-      });
+     Object.keys(form).forEach((key) => {
+  if (form[key] !== "") {
+    formData.append(key, form[key]);
+  }
+});
 
       if (file) {
         formData.append("avatar", file);
       }
+//       if (service !== "") {
+//   formData.append("service", service);
+// }
 
       const res = await axios.post(
-        `${serverUrl}/api/user/uedit-profile`,
+        `${serverUrl}/api/provider/provider/edit-profile`,
         formData,
         {
           withCredentials: true,
@@ -82,7 +93,7 @@ function EditProfile() {
 
       setTimeout(() => {
        
-        navigate("/user");
+        navigate("/provider");
       
       }, 1500);
 
@@ -158,12 +169,45 @@ function EditProfile() {
           <option value="dark">Dark</option>
           <option value="light">Light</option>
         </select>
+        
+  <select
+    name="service"
+    value={form.service}
+    onChange={handleChange}
+    className="w-full mt-4 p-2 rounded bg-slate-700"
+  >
+    <option value="">Select service</option>
+    <option value="electrician">Electrician</option>
+    <option value="plumber">Plumber</option>
+    <option value="cleaning">Cleaning</option>
+    <option value="ac-repair">AC Repair</option>
+    <option value="painter">Painter</option>
+    <option value="carpenter">Carpenter</option>
+  </select>
+  <input
+  type="number"
+  placeholder="Enter Fee"
+  name="fee"
+  value={form.fee}
+  onChange={handleChange}
+   className="w-full mt-4 p-2 rounded bg-slate-700"
+/>
+
+<input
+  type="text"
+  name="experience"
+  placeholder="Experience (e.g. 2 years)"
+  value={form.experience}
+   onChange={handleChange}
+   className="w-full mt-4 p-2 rounded bg-slate-700"
+/>
+
 
         <button
           onClick={handleSubmit}
           className="w-full mt-4 bg-blue-600 py-2 rounded hover:bg-blue-700"
         >
-          Save Changes
+          Update
         </button>
 
       </div>
@@ -172,4 +216,4 @@ function EditProfile() {
   );
 }
 
-export default EditProfile;
+export default ProviderEditProfile;

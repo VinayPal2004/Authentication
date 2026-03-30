@@ -32,6 +32,18 @@ avatar: {
 theme: {
   type: String,
   default: "dark"
+},
+service:{
+  type:String,
+  default:""
+},
+fee: {
+  type: Number,
+  default: 0
+},
+experience: {
+  type: String,
+  default: ""
 }
 },{timestamps:true})
 const User = mongoose.model('User',UserSchema);

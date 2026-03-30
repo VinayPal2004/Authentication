@@ -6,6 +6,8 @@ import Login from './pages/login.jsx'
 import Landing from './pages/landing.jsx'
 import ProviderDashboard from './dashboard/providerhome.jsx'
 import EditProfile from './components/editprofile.jsx'
+import ElectricianPage from './services/electrician.jsx'
+import ProviderEditProfile from './components/providereditprofile.jsx'
 
 
 function App() {
@@ -19,7 +21,9 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/user' element={<UserHome />} />
         <Route path='/provider' element={<ProviderDashboard />} />
-        <Route path='/edit' element={<EditProfile/>}/>
+        <Route path='/useredit' element={<EditProfile/>}/>
+        <Route path="/Electricians" element={<ElectricianPage />} />
+        <Route path="/provideredit" element={<ProviderEditProfile/>}/>
       </Routes>
     </div>
   )

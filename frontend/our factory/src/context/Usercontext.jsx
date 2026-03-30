@@ -7,7 +7,7 @@ export const userDataContext = React.createContext();
 function Usercontext({ children }) {
   const [userData, setUserData] = useState(null);
   const { serverUrl } = useContext(AuthDataContext);
-  console.log(serverUrl);
+  
   
 
   const getCurrentUser = async () => {

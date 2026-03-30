@@ -75,7 +75,7 @@ function UserHome() {
                 <button
                 onClick={() => {
                   setOpen(false);
-                  navigate("/edit");
+                  navigate("/useredit");
                 }}
                 className="block w-full text-left px-4 py-2 hover:bg-slate-800"
               >
@@ -139,7 +139,16 @@ function UserHome() {
               key={index}
               className="bg-slate-900 p-6 rounded-xl text-center hover:bg-slate-800 cursor-pointer transition"
             >
-              <div className="text-4xl mb-3">{service.icon}</div>
+              <div className="text-4xl mb-3"
+              onClick={()=>{
+                if (service.name === "Electrician"){
+                  navigate("/electricians")
+                }
+                if (service.name === "Plumber"){
+                  navigate("/Electricians")
+                }
+
+              }}>{service.icon}</div>
               <h3 className="font-semibold">{service.name}</h3>
             </div>
           ))}
