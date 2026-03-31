@@ -1,20 +1,14 @@
 import User from "../model/usermodel.js";
+import Request from "../model/requestmodel.js";
 // providercontroller.js
 export const getProviderRequests = async (req, res) => {
   try {
     // abhi dummy (baad me DB se aayega)
-    const requests = [
-      {
-        _id: "1",
-        service: "Plumbing",
-        name: "Rahul",
-        location: "Delhi",
-        date: "12 March",
-        status: "pending"
-      }
-    ];
-
+    const requests = await Request.find({
+      providerId: req.userId
+    }).populate("userId", "name address");
     res.status(200).json({ requests });
+    console.log(requests);
 
   } catch (error) {
     res.status(500).json({ message: "Error fetching requests" });

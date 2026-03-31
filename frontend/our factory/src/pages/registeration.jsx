@@ -43,7 +43,7 @@ function Registeration() {
       await getCurrentUser();
 
       setTimeout(() => {
-        const userRole = response.data.user.role;
+        const userRole = response?.data?.user?.role;
 
         if (userRole === "provider") {
           navigate("/provider");

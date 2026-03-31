@@ -1,21 +1,34 @@
-// import mongoose from 'mongoose';
-// import User from './usermodel';
+import mongoose from 'mongoose';
 
-// const RequestSchema = new mongoose.Schema({
-//     User:{
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: "User",
-//     },
-//     provider:{
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: "User",
-//     },
-//     service: String,
-//     status: {
-//         type: String,
-//         enum: ["pending", "accepted", "rejected"],
-//     }
-// },{timestamps:true});
+const RequestSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
+  providerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
+  service: {
+    type: String,
+    required: true
+  },
+  status: {
+    type: String,
+    enum: ["pending", "accepted", "rejected"],
+    default: "pending"
+  },
+  date: {
+    type: Date,
+    required: true
+  },
+  address: {
+    type: String,
+    required: true
+  }
+}, { timestamps: true });
 
-// const Request = mongoose.model("Request", RequestSchema);
-// export default Request;
+const Request = mongoose.model("Request", RequestSchema);
+export default Request;

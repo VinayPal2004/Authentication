@@ -4,6 +4,8 @@ import logo from "../assets/servicehub.png";
 import { useNavigate } from "react-router-dom";
 import { userDataContext } from "../context/Usercontext";
 import { AuthDataContext } from "../context/Authcontext";
+import { ToastContainer, toast } from "react-toastify";
+
 
 function ProviderDashboard() {
   const navigate = useNavigate();
@@ -13,9 +15,8 @@ function ProviderDashboard() {
   const { userData } = useContext(userDataContext);
   const { serverUrl } = useContext(AuthDataContext);
 
-  // 🔥 FETCH REQUESTS
-  useEffect(() => {
-    const fetchRequests = async () => {
+  //  FETCH REQUESTS
+   const fetchRequests = async () => {
       try {
         const res = await axios.get(
           `${serverUrl}/api/provider/provider`,
@@ -27,26 +28,34 @@ function ProviderDashboard() {
       }
     };
 
+  useEffect(() => {
+   
     fetchRequests();
   }, [serverUrl]);
 
-  // 🔥 ACCEPT / REJECT
-  const handleAction = async (id, action) => {
-    try {
-      await axios.post(
-        `${serverUrl}/api/user/${action}/${id}`,
-        {},
-        { withCredentials: true }
-      );
+ const handleStatus = async (requestId, status) => {
+  try {
+    await axios.post(
+      `${serverUrl}/api/booking/update-status`,
+      {
+        requestId,
+        status
+      },
+      { withCredentials: true }
+    );
 
-      setRequests((prev) =>
-        prev.filter((req) => req._id !== id)
-      );
+    toast.success(`Request ${status}`);
+    setRequests((prev) =>
+  prev.filter((r) => r._id !== requestId)
+);
 
-    } catch (error) {
-      console.log("Action failed");
-    }
-  };
+    
+    
+
+  } catch (error) {
+    console.log("Status update failed");
+  }
+};
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
@@ -69,7 +78,7 @@ function ProviderDashboard() {
 
     {/* DASHBOARD BUTTON */}
     <button
-      onClick={() => navigate("/provider")}
+     onClick={() => navigate("/provider-dashboard")}
       className="text-sm md:text-base hover:text-blue-400"
     >
       Dashboard
@@ -162,34 +171,38 @@ function ProviderDashboard() {
                 </h3>
 
                 <p className="text-gray-400 text-sm md:text-base">
-                  Customer: {req.name}
+                  Customer: {req.userId?.name|| "N/A"}
                 </p>
 
                 <p className="text-gray-400 text-sm md:text-base">
-                  Location: {req.location}
+                  Location: { req.address|| "N/A"}
+                </p>
+                 <p className="text-gray-400 text-sm md:text-base">
+                  Address: {req.userId?.address || "N/A"}
                 </p>
 
                 <p className="text-gray-400 mb-4 text-sm md:text-base">
-                  Date: {req.date}
+                  Date: {new Date(req.date).toLocaleString() }
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-3">
 
                   <button
-                    onClick={() => handleAction(req._id, "accept")}
+                    onClick={() => handleStatus(req._id, "accept")}
                     className="bg-green-600 px-4 py-2 rounded-lg hover:bg-green-700 w-full"
                   >
                     Accept
                   </button>
 
                   <button
-                    onClick={() => handleAction(req._id, "reject")}
+                    onClick={() => handleStatus(req._id, "reject")}
                     className="bg-red-600 px-4 py-2 rounded-lg hover:bg-red-700 w-full"
                   >
                     Reject
                   </button>
 
                 </div>
+                
 
               </div>
             ))
@@ -198,6 +211,7 @@ function ProviderDashboard() {
         </div>
 
       </section>
+      <ToastContainer />
 
     </div>
   );

@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authroutes.js';
 import userRouter from './routes/userroutes.js';
 import providerRouter from './routes/providerroutes.js';
+import bookingRouter from './routes/bookingroute.js';
  import cors from 'cors';
 
 
@@ -20,6 +21,7 @@ app.use(cors({
 }));
 app.use('/api/auth',authRoutes);
 app.use('/api/user/',userRouter)
+app.use('/api/booking/',bookingRouter)
 app.use('/api/provider/',providerRouter) // provider routes are in providerRouter
 app.use("/uploads", express.static("uploads"));
 

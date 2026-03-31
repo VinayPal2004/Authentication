@@ -40,10 +40,12 @@ export const registerUser = async(req,res)=>{
      
 
   } catch (error) {
-     res.status(500).json({message:"Internal server error",error})
-     console.log("registeration unsuccessfull");
-     
-  }
+  console.log("ERROR:", error); // 🔥 REAL ERROR PRINT
+  res.status(500).json({
+    message: "Internal server error",
+    error: error.message
+  });
+}
   }
   export const loginUser = async (req, res) => {
     try {

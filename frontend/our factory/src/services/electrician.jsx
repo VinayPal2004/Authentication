@@ -2,10 +2,12 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { AuthDataContext } from "../context/Authcontext";
 import { CgProfile } from "react-icons/cg";
+import { useNavigate } from "react-router-dom";
 
 function ElectricianPage() {
   const { serverUrl } = useContext(AuthDataContext);
   const [electricians, setElectricians] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchElectricians = async () => {
@@ -27,27 +29,26 @@ function ElectricianPage() {
     fetchElectricians();
   }, [serverUrl]);
 
-//   const handleBook = async (provider) => {
-//   try {
-//     const res = await axios.post(
-//       `${serverUrl}/api/user/book-provider`,
-//       {
-//         providerId: provider._id,
-//         service: provider.service
-//       },
-//       {
-//        withCredentials: true // ✅ ensure cookies are sent
-//         }
-      
-//     );
+const handleBooking = async (providerId, service) => {
+  try {
+    await axios.post(
+      `${serverUrl}/api/booking/create`,
+      {
+        providerId,
+        service,
+        date: new Date(), // 🔥 current date
+        address: "" // 🔥 hardcoded address (replace with user input if needed)
+      },
+      { withCredentials: true }
+    );
 
-//     alert("Request Sent Successfully ✅");
+    alert("Booking Done");
+    navigate('/user')
 
-//   } catch (error) {
-//     console.log(error);
-//     alert("Booking failed ");
-//   }
-// };
+  } catch (error) {
+    console.log("Booking failed");
+  }
+}; 
 
   return (
     <div className="min-h-screen bg-slate-900 text-white p-10">
@@ -94,7 +95,8 @@ function ElectricianPage() {
 
         {/* 👇 Book Button */}
         <button className="mt-3 bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg"
-         >
+         
+          onClick={() => handleBooking(item._id, item.service)}>
           Book Now
         </button>
       </div>
