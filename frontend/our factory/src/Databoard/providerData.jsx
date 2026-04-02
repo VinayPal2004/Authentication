@@ -22,9 +22,13 @@ function ProviderData() {
   const fetchRequests = async () => {
     try {
       const res = await axios.get(
-        `${serverUrl}/api/provider/provider`,
+        `${serverUrl}/api/booking/history`,
+        
         { withCredentials: true }
       );
+       console.log("All requests from backend:", res.data.requests); // ✅ pura object
+    console.log("Request statuses:", res.data.requests.map(r => r.status)); // ✅ sirf status values
+
       setRequests(res.data.requests);
     } catch (error) {
       console.log("Error fetching requests");
@@ -35,16 +39,15 @@ function ProviderData() {
     fetchRequests();
   }, []);
 
-  // 🔥 filter logic
-  const filteredRequests =
-    filter === "all"
-      ? requests
-      : requests.filter((r) => r.status === filter);
-
-  // 💰 earnings
+  //  filter logic
+ const filteredRequests =
+  filter === "all"
+    ? requests
+    : requests.filter((r) => r.status.toLowerCase() === filter);
+  //  earnings
   const totalEarnings = requests
-    .filter((r) => r.status === "accepted")
-    .reduce((sum) => sum + 500, 0);
+    .filter((r) => r.status === "accept")
+    .reduce((sum,r) => sum + (r.providerId?.fee || 0), 0);
 
   return (
     <div className="min-h-screen bg-slate-900 text-white p-6">
@@ -53,7 +56,7 @@ function ProviderData() {
         Provider Requests (Read Only)
       </h1>
 
-      {/* 💰 Earnings */}
+      {/* Earnings */}
       <div className="bg-slate-800 p-4 rounded mb-6">
         <h2>Total Earnings</h2>
         <p className="text-green-400 text-2xl font-bold">
@@ -61,7 +64,7 @@ function ProviderData() {
         </p>
       </div>
 
-      {/* 🔥 FILTER BUTTONS */}
+      {/*  FILTER BUTTONS */}
       <div className="flex gap-3 mb-6">
         <button
           onClick={() => setFilter("all")}
@@ -73,18 +76,18 @@ function ProviderData() {
         </button>
 
         <button
-          onClick={() => setFilter("accepted")}
+          onClick={() => setFilter("accept")}
           className={`px-4 py-2 rounded ${
-            filter === "accepted" ? "bg-green-600" : "bg-slate-700"
+            filter === "accept" ? "bg-green-600" : "bg-slate-700"
           }`}
         >
           Accepted
         </button>
 
         <button
-          onClick={() => setFilter("rejected")}
+          onClick={() => setFilter("reject")}
           className={`px-4 py-2 rounded ${
-            filter === "rejected" ? "bg-red-600" : "bg-slate-700"
+            filter === "reject" ? "bg-red-600" : "bg-slate-700"
           }`}
         >
           Rejected
@@ -117,9 +120,9 @@ function ProviderData() {
                 Status:{" "}
                 <span
                   className={
-                    req.status === "accepted"
+                    req.status === "accept"
                       ? "text-green-400"
-                      : req.status === "rejected"
+                      : req.status === "reject"
                       ? "text-red-400"
                       : "text-yellow-400"
                   }

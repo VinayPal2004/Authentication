@@ -38,7 +38,9 @@ function UserHome() {
             Home
           </button>
 
-          <button className="hidden md:block hover:text-blue-400">
+          <button className="hidden md:block hover:text-blue-400"
+            onClick={() => navigate("/mybookings")}
+          >
             My Bookings
           </button>
 
@@ -79,7 +81,7 @@ function UserHome() {
                 </button>
 
                 <button
-                  onClick={() => navigate("/bookings")}
+                  onClick={() => navigate("/mybookings")}
                   className="block w-full text-left px-4 py-2 hover:bg-slate-800"
                 >
                   My Bookings

@@ -14,6 +14,7 @@ import PainterPage from './services/painter.jsx'
 import ACrepairPage from './services/acrepair.jsx'
 import CarpentrPage from './services/carpenter.jsx'
 import ProviderData from './Databoard/providerData.jsx'
+import MyBookings from './Databoard/userBookings.jsx'
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/user" element={<UserHome />} />
         <Route path="/provider" element={<ProviderDashboard />} />
         <Route path="/provider-dashboard" element={<ProviderData />} />
+        <Route path="/mybookings" element={<MyBookings />} />
 
         <Route path="/useredit" element={<EditProfile />} />
         <Route path="/provideredit" element={<ProviderEditProfile />} />

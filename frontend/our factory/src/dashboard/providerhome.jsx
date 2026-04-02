@@ -33,24 +33,20 @@ function ProviderDashboard() {
     fetchRequests();
   }, [serverUrl]);
 
- const handleStatus = async (requestId, status) => {
+ // ProviderDashboard.jsx
+const handleStatus = async (requestId, status) => {
   try {
     await axios.post(
       `${serverUrl}/api/booking/update-status`,
-      {
-        requestId,
-        status
-      },
+      { requestId, status },
       { withCredentials: true }
     );
 
     toast.success(`Request ${status}`);
-    setRequests((prev) =>
-  prev.filter((r) => r._id !== requestId)
-);
+    setRequests((prev) => prev.filter((r) => r._id !== requestId));
 
-    
-    
+
+   
 
   } catch (error) {
     console.log("Status update failed");

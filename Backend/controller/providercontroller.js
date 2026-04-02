@@ -5,7 +5,8 @@ export const getProviderRequests = async (req, res) => {
   try {
     // abhi dummy (baad me DB se aayega)
     const requests = await Request.find({
-      providerId: req.userId
+      providerId: req.userId,
+      status: "pending"
     }).populate("userId", "name address");
     res.status(200).json({ requests });
     console.log(requests);

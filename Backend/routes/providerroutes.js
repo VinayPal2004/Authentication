@@ -2,7 +2,7 @@ import express from 'express';
 import isAuth from '../middleware/isAuth.js';
 
 import { upload } from "../middleware/multer.js";
-import User from "../model/usermodel.js";
+
 import { getAllProviders, getProviderRequests } from "../controller/providercontroller.js";
 import { providereditProfile } from "../controller/providercontroller.js";
 

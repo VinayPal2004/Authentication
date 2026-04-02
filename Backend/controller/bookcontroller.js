@@ -1,4 +1,5 @@
 import Request from "../model/requestmodel.js";
+import Booking from "../model/bookingmodel.js";
 
 export const bookProvider = async (req, res) => {
   try {
@@ -9,7 +10,8 @@ export const bookProvider = async (req, res) => {
       providerId: providerId,
       service,
       date, // 🔥 ensure date is stored as Date type
-      address
+      address,
+      fee: providerId.fee,
     });
 
     res.status(201).json({
@@ -22,16 +24,19 @@ export const bookProvider = async (req, res) => {
     res.status(500).json({ message: "Booking failed" });
   }
 };
-export const getProviderRequests = async (req, res) => {
+export const getProviderHistory = async (req, res) => {
   try {
     const requests = await Request.find({
-      providerId: req.userId
+      providerId: req.userId,
       
-    }).populate("userId", "name");
+    }).populate("userId", "name")
+    .populate("providerId", "name fee")
+    .sort({ createdAt: -1 });
 
     res.status(200).json({ requests });
 
   } catch (error) {
+    console.error("Error fetching requests:", error); // debug ke liye
     res.status(500).json({ message: "Error fetching requests" });
   }
 };
@@ -52,5 +57,20 @@ export const updateRequestStatus = async (req, res) => {
 
   } catch (error) {
     res.status(500).json({ message: "Update failed" });
+  }
+};
+// bookingController
+
+
+export const getMyBookings = async (req, res) => {
+  try {
+    const bookings = await Booking.find({ userId: req.userId })
+      .populate("providerId", "name service ")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({ bookings });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching bookings" });
   }
 };

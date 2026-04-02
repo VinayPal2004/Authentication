@@ -2,52 +2,78 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { CgProfile } from "react-icons/cg";
 import { AuthDataContext } from "../context/Authcontext";
+import { useNavigate } from "react-router-dom";
 
 function PlumberPage() {
   const { serverUrl } = useContext(AuthDataContext);
   const [plumbers, setPlumbers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
+  // Fetch plumbers
   useEffect(() => {
     const fetchPlumbers = async () => {
       try {
         const res = await axios.get(
           `${serverUrl}/api/provider/service/plumber`
         );
-
         setPlumbers(res.data.providers || []);
       } catch (error) {
-        console.log(error);
+        console.log("Error fetching plumbers:", error);
+        setPlumbers([]);
       }
     };
-
     fetchPlumbers();
   }, [serverUrl]);
 
+  // Booking handler
+  const handleBooking = async (providerId, service) => {
+    if (loading) return;
+    setLoading(true);
+    try {
+      await axios.post(
+        `${serverUrl}/api/booking/create`,
+        {
+          providerId,
+          service,
+          date: new Date().toISOString(),
+          address: "User Address", // Replace with actual user address if available
+        },
+        { withCredentials: true }
+      );
+      alert("Booking Done ✅");
+      navigate("/user");
+    } catch (error) {
+      console.log("Booking failed:", error);
+      alert("Booking Failed ❌");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-  <div className="min-h-screen bg-slate-900 text-white p-4 md:p-10">
-    
-    <h1 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-blue-400">
+    <div className="min-h-screen bg-slate-900 text-white p-4 md:p-10">
+      <h1 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-blue-400">
         Plumbers
-    </h1>
+      </h1>
 
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+        {plumbers.length === 0 ? (
+          <p>No plumbers available</p>
+        ) : (
+          plumbers.map((item) => (
+           <div
+      key={item._id}
+      className="bg-slate-800 p-5 rounded-xl flex justify-between items-center"
+    >
+      {/* LEFT SIDE DATA */}
+    
 
-      {plumbers.length === 0 ? (
-        <p>No plumbers available</p>
-      ) : (
-        plumbers.map((item) => (
-          
-          <div
-            key={item._id}
-            className="bg-slate-800 p-4 md:p-5 rounded-xl flex flex-col md:flex-row justify-between items-center gap-4"
-          >
-
-            {/* LEFT CONTENT */}
-           <div>
+      <div>
         <h2 className="text-xl font-semibold">{item.name}</h2>
 
         <p className="text-gray-400">
-          Phone: {item.Phone}
+          Phone: {item.phone}
         </p>
 
         <p className="text-gray-400">
@@ -67,43 +93,31 @@ function PlumberPage() {
           Fee: ₹{item.fee || ""}
         </p>
 
-              <button
-                onClick={async () => {
-                  await axios.post(
-                    `${serverUrl}/api/user/book-provider`,
-                    {
-                      providerId: item._id,
-                      service: item.service
-                    },
-                    { withCredentials: true }
-                  );
-                  alert("Booked ✅");
-                }}
-                className="mt-3 bg-green-500 px-4 py-2 rounded w-full md:w-auto"
-              >
-                Book Now
-              </button>
+        {/* 👇 Book Button */}
+        <button className="mt-3 bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg"
+         
+          onClick={() => handleBooking(item._id, item.service)}>
+          Book Now
+        </button>
+      </div>
+
+              {/* RIGHT IMAGE */}
+              <div className="w-20 h-20 md:w-40 md:h-40 rounded-2xl overflow-hidden bg-slate-700 flex items-center justify-center">
+                {item.avatar ? (
+                  <img
+                    src={`${serverUrl}/uploads/${item.avatar}`}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <CgProfile size={window.innerWidth > 768 ? 40 : 30} className="text-white" />
+                )}
+              </div>
             </div>
-
-            {/* RIGHT IMAGE */}
-            <div className="w-20 h-20 md:w-40 md:h-40 rounded-2xl overflow-hidden bg-slate-700 flex items-center justify-center">
-              {item.avatar ? (
-                <img
-                  src={`http://localhost:8400/uploads/${item.avatar}`}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <CgProfile size={30} className="text-white md:size-40" />
-              )}
-            </div>
-
-          </div>
-        ))
-      )}
-
+          ))
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
 }
 
 export default PlumberPage;

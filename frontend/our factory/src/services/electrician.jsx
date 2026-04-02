@@ -16,39 +16,46 @@ function ElectricianPage() {
           `${serverUrl}/api/provider/service/electrician`
         );
 
-        console.log("API DATA:", res.data); // 🔍 debug
+        console.log("API DATA:", res.data); // 
 
-        setElectricians(res.data.providers || []); // ✅ safe
+        setElectricians(res.data.providers || []); // 
 
       } catch (error) {
         console.log("Error fetching electricians", error);
-        setElectricians([]); // ✅ crash se bachao
+        setElectricians([]); //
       }
     };
 
     fetchElectricians();
   }, [serverUrl]);
 
+const [loading, setLoading] = useState(false);
+
 const handleBooking = async (providerId, service) => {
+  if (loading) return;
+
+  setLoading(true);
   try {
     await axios.post(
       `${serverUrl}/api/booking/create`,
       {
         providerId,
         service,
-        date: new Date(), // 🔥 current date
-        address: "" // 🔥 hardcoded address (replace with user input if needed)
+        date: new Date().toISOString(),
+        address: "User Address"
       },
       { withCredentials: true }
     );
 
     alert("Booking Done");
-    navigate('/user')
+    navigate('/user');
 
   } catch (error) {
-    console.log("Booking failed");
+    console.log("Booking failed", error);
+  } finally {
+    setLoading(false);
   }
-}; 
+};
 
   return (
     <div className="min-h-screen bg-slate-900 text-white p-10">
@@ -73,7 +80,7 @@ const handleBooking = async (providerId, service) => {
         <h2 className="text-xl font-semibold">{item.name}</h2>
 
         <p className="text-gray-400">
-          Phone: {item.Phone}
+          Phone: {item.phone}
         </p>
 
         <p className="text-gray-400">
