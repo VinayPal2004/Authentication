@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://service-hub-plum.vercel.app"
+    "https://service-hub-wrdt.vercel.app/"
   ],
   credentials: true
 }));
