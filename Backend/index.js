@@ -6,40 +6,60 @@ import authRoutes from './routes/authroutes.js';
 import userRouter from './routes/userroutes.js';
 import providerRouter from './routes/providerroutes.js';
 import bookingRouter from './routes/bookingroute.js';
- import cors from 'cors';
- import fs from "fs";
-
+import cors from 'cors';
+import fs from "fs";
 
 dotenv.config();
+
 const app = express();
-const Port = process.env.PORT || 8400;
+const PORT = process.env.PORT || 8400;
+
+// 🔥 Connect DB
 connectDB();
+
+// 🔥 Middlewares
 app.use(express.json());
 app.use(cookieParser());
 
+// 🔥 CORS (production ready)
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://service-hub-wrdt.vercel.app"
+];
+
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://service-hub-wrdt.vercel.app"
-  ],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed: " + origin));
+    }
+  },
   credentials: true
 }));
 
-app.use('/api/auth',authRoutes);
-app.use('/api/user/',userRouter);
-app.use('/api/booking/',bookingRouter);
-app.use('/api/provider/',providerRouter);
-
-
-
+// 🔥 Ensure uploads folder exists
 if (!fs.existsSync("uploads")) {
   fs.mkdirSync("uploads");
 }
+
+// 🔥 Static folder
 app.use("/uploads", express.static("uploads"));
 
-app.listen(Port,()=>{
-    console.log(`server is running on port ${Port}`);
-    
-})
+// 🔥 Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/user', userRouter);
+app.use('/api/booking', bookingRouter);
+app.use('/api/provider', providerRouter);
+
+// 🔥 Test route (optional)
+app.get("/", (req, res) => {
+  res.send("API is running...");
+});
+
+// 🔥 Start server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
 export default app;
