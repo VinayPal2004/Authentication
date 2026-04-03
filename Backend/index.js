@@ -15,10 +15,15 @@ const Port = process.env.PORT || 3000
 connectDB();
 app.use(express.json());
 app.use(cookieParser());
+
 app.use(cors({
-    origin:'http://localhost:5173',
-    credentials:true,
+  origin: [
+    "http://localhost:5173",
+    "https://service-hub-plum.vercel.app"
+  ],
+  credentials: true
 }));
+
 app.use('/api/auth',authRoutes);
 app.use('/api/user/',userRouter);
 app.use('/api/booking/',bookingRouter);

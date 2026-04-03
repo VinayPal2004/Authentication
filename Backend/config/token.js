@@ -1,11 +1,18 @@
-import jwt from 'jsonwebtoken';
- const generateToken =  (UserId)=>{
-    try {
-        return jwt.sign({id :UserId},process.env.JWT_SECRET, {expiresIn:'7d'})
-    } catch (error) {
-        console.log("token not generated from token.js");//fix
-        
-        
-    }
- }
- export default generateToken;
+import jwt from "jsonwebtoken";
+
+const generateToken = (userId) => {
+  try {
+    const token = jwt.sign(
+      { id: userId },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    return token;
+  } catch (error) {
+    console.log("JWT Error:", error.message);
+    return null; // important
+  }
+};
+
+export default generateToken;

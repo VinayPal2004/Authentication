@@ -29,13 +29,12 @@ export const registerUser = async(req,res)=>{
       role
     });
      const token = await generateToken(user._id);
-     res.cookie('token',token,
-      {
-        httpOnly:true,
-        secure:false,
-        sameSite:'lax',
-        maxAge:7*24*60*60*1000
-      })
+    res.cookie('token', token, {
+  httpOnly: true,
+  secure: true,       // 🔥 MUST (HTTPS ke liye)
+  sameSite: 'none',   // 🔥 MUST (cross-origin ke liye)
+  maxAge: 7 * 24 * 60 * 60 * 1000
+});
       res.status(201).json({message:"User registered successfully",token,user:{id:user._id,name:user.name,email:user.email,role:user.role}});
      
 
@@ -64,13 +63,12 @@ export const registerUser = async(req,res)=>{
 
         const token = generateToken(user._id);
 
-        res.cookie("token", token, {
-        httpOnly: true,
-        secure: false,      
-        sameSite: "lax",   
-        maxAge: 7 * 24 * 60 * 60 * 1000
+        res.cookie('token', token, {
+  httpOnly: true,
+  secure: true,       // 🔥 MUST (HTTPS ke liye)
+  sameSite: 'none',   // 🔥 MUST (cross-origin ke liye)
+  maxAge: 7 * 24 * 60 * 60 * 1000
 });
-
         return res.status(200).json({
             message: "Login successful",
             user: { id: user._id, name: user.name, email: user.email, role: user.role },

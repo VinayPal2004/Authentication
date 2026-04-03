@@ -4,7 +4,8 @@ export const AuthDataContext = createContext();
 
 function Authcontext({children}) 
 {
-  let serverUrl = "http://localhost:8400";
+  let serverUrl = import.meta.env.VITE_API_URL;
+   console.log("Server URL:", serverUrl);
   let value ={
     serverUrl
 
