@@ -2,10 +2,8 @@ import React, { useState, useContext } from "react";
 import logo from "../assets/servicehub.png";
 import { useNavigate } from "react-router-dom";
 import { userDataContext } from "../context/Usercontext";
-import { AuthDataContext } from "../context/Authcontext.jsx";
 
 function UserHome() {
-  const { serverUrl } = useContext(AuthDataContext);
   const services = [
     { name: "Electrician", icon: "⚡" },
     { name: "Plumber", icon: "🔧" },
@@ -55,7 +53,7 @@ function UserHome() {
             >
               {userData?.avatar ? (
                 <img
-                  src={`${serverUrl}/uploads/${userData.avatar}`}
+                  src={`http://localhost:8400/uploads/${userData.avatar}`}
                   className="w-full h-full object-cover"
                 />
               ) : (
