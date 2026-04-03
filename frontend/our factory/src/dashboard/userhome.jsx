@@ -53,7 +53,7 @@ function UserHome() {
             >
               {userData?.avatar ? (
                 <img
-                  src={`http://localhost:8400/uploads/${userData.avatar}`}
+                  src={`https://servicehub02.onrender.com/uploads/${userData.avatar}`}
                   className="w-full h-full object-cover"
                 />
               ) : (
