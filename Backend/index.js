@@ -7,11 +7,12 @@ import userRouter from './routes/userroutes.js';
 import providerRouter from './routes/providerroutes.js';
 import bookingRouter from './routes/bookingroute.js';
  import cors from 'cors';
+ import fs from "fs";
 
 
 dotenv.config();
 const app = express();
-const Port = process.env.PORT || 3000
+const Port = process.env.PORT || 8400;
 connectDB();
 app.use(express.json());
 app.use(cookieParser());
@@ -19,7 +20,7 @@ app.use(cookieParser());
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    // "https://service-hub-plum.vercel.app"
+    "https://service-hub-plum.vercel.app"
   ],
   credentials: true
 }));
@@ -28,6 +29,12 @@ app.use('/api/auth',authRoutes);
 app.use('/api/user/',userRouter);
 app.use('/api/booking/',bookingRouter);
 app.use('/api/provider/',providerRouter);
+
+
+
+if (!fs.existsSync("uploads")) {
+  fs.mkdirSync("uploads");
+}
 app.use("/uploads", express.static("uploads"));
 
 app.listen(Port,()=>{

@@ -11,7 +11,7 @@ export const bookProvider = async (req, res) => {
       service,
       date, 
       address,
-      fee: providerId.fee,
+      fee: providerId?.fee,
     });
 
     res.status(201).json({
