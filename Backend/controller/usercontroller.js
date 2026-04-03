@@ -18,7 +18,7 @@ export const editProfile = async (req, res) => {
 
     let updateData = { name, email,Phone,address };
 
-    // 👇 avatar aaya toh add karo
+   
     if (req.file) {
       updateData.avatar = req.file.filename;
     }
@@ -40,5 +40,5 @@ export const editProfile = async (req, res) => {
 };
 
 
-//bok provider
+
 

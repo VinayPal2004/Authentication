@@ -40,7 +40,7 @@ export const registerUser = async(req,res)=>{
      
 
   } catch (error) {
-  console.log("ERROR:", error); // 🔥 REAL ERROR PRINT
+  console.log("ERROR:", error); 
   res.status(500).json({
     message: "Internal server error",
     error: error.message
@@ -66,8 +66,8 @@ export const registerUser = async(req,res)=>{
 
         res.cookie("token", token, {
         httpOnly: true,
-        secure: false,      // MUST be false on localhost
-        sameSite: "lax",    // 🔥 KEY FIX
+        secure: false,      
+        sameSite: "lax",   
         maxAge: 7 * 24 * 60 * 60 * 1000
 });
 

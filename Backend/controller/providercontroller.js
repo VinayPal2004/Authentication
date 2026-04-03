@@ -3,7 +3,7 @@ import Request from "../model/requestmodel.js";
 // providercontroller.js
 export const getProviderRequests = async (req, res) => {
   try {
-    // abhi dummy (baad me DB se aayega)
+    
     const requests = await Request.find({
       providerId: req.userId,
       status: "pending"
@@ -21,7 +21,7 @@ export const providereditProfile = async (req, res) => {
 
     let updateData = { name, service,Phone,address,fee,experience };
 
-    // 👇 avatar aaya toh add karo
+    
     if (req.file) {
       updateData.avatar = req.file.filename;
     }

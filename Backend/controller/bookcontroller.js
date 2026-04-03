@@ -9,7 +9,7 @@ export const bookProvider = async (req, res) => {
       userId: req.userId,
       providerId: providerId,
       service,
-      date, // 🔥 ensure date is stored as Date type
+      date, 
       address,
       fee: providerId.fee,
     });
@@ -36,7 +36,7 @@ export const getProviderHistory = async (req, res) => {
     res.status(200).json({ requests });
 
   } catch (error) {
-    console.error("Error fetching requests:", error); // debug ke liye
+    console.error("Error fetching requests:", error); 
     res.status(500).json({ message: "Error fetching requests" });
   }
 };

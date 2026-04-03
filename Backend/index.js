@@ -20,9 +20,9 @@ app.use(cors({
     credentials:true,
 }));
 app.use('/api/auth',authRoutes);
-app.use('/api/user/',userRouter)
-app.use('/api/booking/',bookingRouter)
-app.use('/api/provider/',providerRouter) // provider routes are in providerRouter
+app.use('/api/user/',userRouter);
+app.use('/api/booking/',bookingRouter);
+app.use('/api/provider/',providerRouter);
 app.use("/uploads", express.static("uploads"));
 
 app.listen(Port,()=>{

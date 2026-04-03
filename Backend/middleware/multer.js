@@ -7,16 +7,15 @@ const storage = multer.diskStorage({
   },
 
   filename: (req, file, cb) => {
-    // 👇 filename clean karo
+    
     const cleanName = file.originalname
-      .replace(/\s+/g, "_")                 // space → _
-      .replace(/[^a-zA-Z0-9._-]/g, "");    // special char remove
-
+      .replace(/\s+/g, "_")              
+      .replace(/[^a-zA-Z0-9._-]/g, "");    
     cb(null, Date.now() + "-" + cleanName);
   },
 });
 
-// file filter (optional but useful)
+
 const fileFilter = (req, file, cb) => {
   if (
     file.mimetype === "image/jpeg" ||
