@@ -1,5 +1,7 @@
 import React from "react";
 import { FaBolt, FaWrench, FaBroom, FaSnowflake, FaTools } from "react-icons/fa";
+import { LuPaintbrushVertical } from "react-icons/lu";
+
 import { useNavigate } from "react-router-dom";
 
 function Landing() {
@@ -19,7 +21,12 @@ function Landing() {
 
           <a className="hover:text-blue-400">Home</a>
           <a className="hover:text-blue-400">Services</a>
-          <a className="hover:text-blue-400">Providers</a>
+          <a className="hover:text-blue-400"
+          onClick={()=>{
+            document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
+          }}
+          >
+            Contact us</a>
 
           <a
             className="hover:text-blue-400 cursor-pointer"
@@ -95,6 +102,10 @@ function Landing() {
             <FaTools className="text-3xl mx-auto text-blue-400 mb-3" />
             Carpenter
           </div>
+           <div className="bg-slate-900 p-6 rounded-xl hover:border border-blue-500">
+            <LuPaintbrushVertical className="text-3xl mx-auto text-blue-400 mb-3" />
+            Painter
+          </div>
 
         </div>
 
@@ -135,11 +146,14 @@ function Landing() {
           Join our platform and start earning from your skills.
         </p>
 
-        <button className="bg-blue-600 px-6 py-3 rounded-lg hover:bg-blue-700">
+        <button className="bg-blue-600 px-6 py-3 rounded-lg hover:bg-blue-700"
+          onClick={() => navigate("/signup")}
+        >
           Join Now
         </button>
 
       </section>
+      
 
       {/* Testimonials */}
       <section className="bg-slate-900 py-16 px-4">
@@ -169,6 +183,55 @@ function Landing() {
         </div>
 
       </section>
+      <div id="contact" className="bg-gray-900 text-white py-12 px-6">
+      <h2 className="text-3xl font-bold text-center mb-8 text-blue-400">
+        Contact Us
+      </h2>
+
+      <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+        
+        {/* Left side */}
+        <div>
+          <h3 className="text-xl font-semibold mb-4">Get in Touch</h3>
+          <p className="text-gray-400 mb-4">
+            Have questions or need help? Fill out the form and our team will get back to you.
+          </p>
+
+          <p className="text-gray-300">📧 Email: support@servicehub.com</p>
+          <p className="text-gray-300">📞 Phone: +91 91409 01178</p>
+          <p className="text-gray-300">📍 Location: India</p>
+        </div>
+
+        {/* Right side (No form — only UI) */}
+        <div className="space-y-4">
+          <input
+            type="text"
+            placeholder="Your Name"
+            className="w-full p-3 rounded bg-gray-800 text-white outline-none"
+          />
+
+          <input
+            type="email"
+            placeholder="Your Email"
+            className="w-full p-3 rounded bg-gray-800 text-white outline-none"
+          />
+
+          <textarea
+            rows="4"
+            placeholder="Your Message"
+            className="w-full p-3 rounded bg-gray-800 text-white outline-none"
+          ></textarea>
+
+          <button
+            className="w-full bg-blue-500 hover:bg-blue-600 p-3 rounded font-semibold"
+            onClick={() => navigate("/signup")}
+          >
+            Send Message
+          </button>
+        </div>
+      </div>
+    </div>
+  
 
       {/* Footer */}
       <footer className="bg-black text-center py-6 text-gray-400 text-sm">

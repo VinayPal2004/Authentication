@@ -79,6 +79,13 @@ const handleStatus = async (requestId, status) => {
     >
       Dashboard
     </button>
+    <button className="hidden md:block hover:text-blue-400"
+            onClick={() => {
+              document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
+            }}
+          >
+            contact us
+          </button>
 
     {/* PROFILE ICON */}
     <button
@@ -102,7 +109,7 @@ const handleStatus = async (requestId, status) => {
       <div className="absolute right-0 top-12 w-44 bg-slate-900 border border-slate-700 rounded-lg shadow-lg z-50">
 
         <button
-          onClick={() => navigate("/profile")}
+          onClick={() => navigate("/userview")}
           className="block w-full text-left px-4 py-2 hover:bg-slate-800"
         >
           View Profile
@@ -207,6 +214,54 @@ const handleStatus = async (requestId, status) => {
         </div>
 
       </section>
+      <section id="contact" className="bg-slate-900 text-white py-12 px-4 md:px-10">
+  <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-blue-400">
+    Contact Us
+  </h2>
+
+  <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+
+    {/* Left */}
+    <div>
+      <h3 className="text-lg md:text-xl font-semibold mb-4">Get in Touch</h3>
+      <p className="text-gray-400 mb-4">
+        Have questions or need help? Reach out to us directly.
+      </p>
+
+      <p className="text-gray-300">📧 Email: support@servicehub.com</p>
+      <p className="text-gray-300">📞 Phone: +91 91409 01178</p>
+      <p className="text-gray-300">📍 Location: India</p>
+    </div>
+
+    {/* Right (Buttons only) */}
+    <div className="flex flex-col gap-4 justify-center">
+
+      {/* WhatsApp */}
+      <button
+        className="w-full bg-green-500 hover:bg-green-600 p-3 rounded font-semibold"
+        onClick={() => {
+          const msg = "Hello, I want to contact ServiceHub.";
+          window.open(`https://wa.me/919140901178?text=${encodeURIComponent(msg)}`, "_blank");
+        }}
+      >
+        Chat on WhatsApp
+      </button>
+
+      {/* Email */}
+      <button
+        className="w-full bg-blue-500 hover:bg-blue-600 p-3 rounded font-semibold"
+        onClick={() => {
+          const subject = "Contact from ServiceHub";
+          const body = "Hello, I want to know more about your services.";
+          window.location.href = `mailto:support@servicehub.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }}
+      >
+        Send Email
+      </button>
+
+    </div>
+  </div>
+</section>
       <ToastContainer />
 
     </div>

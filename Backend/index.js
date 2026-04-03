@@ -52,6 +52,7 @@ app.use('/api/user', userRouter);
 app.use('/api/booking', bookingRouter);
 app.use('/api/provider', providerRouter);
 
+
 // 🔥 Test route (optional)
 app.get("/", (req, res) => {
   res.send("API is running...");

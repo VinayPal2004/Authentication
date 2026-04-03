@@ -1,8 +1,3 @@
-try to deploy
-https://service-hub-1-ykqq.onrender.com
-
-
-
 import React, { useContext } from "react";
 import { userDataContext } from "../context/Usercontext";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +6,6 @@ function ViewProfile() {
   const { userData } = useContext(userDataContext);
   const navigate = useNavigate();
 
-  // 🔥 Important: prevent crash / auto redirect
   if (!userData) {
     return (
       <div className="min-h-screen bg-slate-900 text-white flex justify-center items-center">
@@ -20,13 +14,15 @@ function ViewProfile() {
     );
   }
 
+  const isProvider = userData.role === "provider";
+
   return (
     <div className="min-h-screen bg-slate-900 text-white flex justify-center items-center px-4">
 
       <div className="bg-slate-800 p-6 md:p-8 rounded-xl w-full max-w-md shadow-lg">
 
         <h2 className="text-2xl font-bold text-center mb-6 text-blue-400">
-          View Profile
+          {isProvider ? "Provider Profile" : "User Profile"}
         </h2>
 
         {/* Avatar */}
@@ -71,11 +67,46 @@ function ViewProfile() {
           <label className="text-gray-400 text-sm">Phone</label>
           <input
             type="text"
-            value={userData.phone || ""}
+            value={userData.phone || userData.Phone || ""}
             readOnly
             className="w-full p-3 mt-1 rounded bg-slate-700 text-white outline-none"
           />
         </div>
+
+        {/* Provider-specific fields */}
+        {isProvider && (
+          <>
+            <div className="mb-4">
+              <label className="text-gray-400 text-sm">Service</label>
+              <input
+                type="text"
+                value={userData.service || ""}
+                readOnly
+                className="w-full p-3 mt-1 rounded bg-slate-700 text-white outline-none"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="text-gray-400 text-sm">Fee</label>
+              <input
+                type="text"
+                value={userData.fee || ""}
+                readOnly
+                className="w-full p-3 mt-1 rounded bg-slate-700 text-white outline-none"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="text-gray-400 text-sm">Experience</label>
+              <input
+                type="text"
+                value={userData.experience || ""}
+                readOnly
+                className="w-full p-3 mt-1 rounded bg-slate-700 text-white outline-none"
+              />
+            </div>
+          </>
+        )}
 
         {/* Buttons */}
         <div className="flex gap-3 mt-4">
@@ -87,7 +118,7 @@ function ViewProfile() {
           </button>
 
           <button
-            onClick={() => navigate("/useredit")}
+            onClick={() => navigate(isProvider ? "/provideredit" : "/useredit")}
             className="w-1/2 bg-blue-500 hover:bg-blue-600 p-3 rounded font-semibold"
           >
             Edit
