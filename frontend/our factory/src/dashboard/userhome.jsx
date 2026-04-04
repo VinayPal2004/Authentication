@@ -18,7 +18,7 @@ function UserHome() {
   const { userData } = useContext(userDataContext);
   
   return (
-    <div className="min-h-screen bg-gradient-to-rfrom-slate-900 via-blue-950 to-slate-900 text-white">
+    <div className="min-h-screen bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white">
 
       {/* NAVBAR */}
       <nav className="flex items-center justify-between px-4 md:px-10 py-4 border-b border-slate-800">
