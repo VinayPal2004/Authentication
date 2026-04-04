@@ -185,8 +185,8 @@ function UserHome() {
         Have questions or need help? Reach out to us directly.
       </p>
 
-      <p className="text-gray-300">📧 Email: support@servicehub.com</p>
-      <p className="text-gray-300">📞 Phone: +91 91409 01178</p>
+      <p className="text-gray-300">📧 Email: supportservicehub@gmail.com</p>
+      <p className="text-gray-300">📞 Phone: +91 93556 79054</p>
       <p className="text-gray-300">📍 Location: India</p>
     </div>
 
