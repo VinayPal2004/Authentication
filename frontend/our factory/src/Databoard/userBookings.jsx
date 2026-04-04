@@ -9,27 +9,40 @@ function MyBookings() {
   const [bookings, setBookings] = useState([]);
   const [filter, setFilter] = useState("all");
 
- useEffect(() => {
-  const fetchBookings = async () => {
-    try {
-      const res = await axios.get(
-        `${serverUrl}/api/booking/my-bookings`,
-        { withCredentials: true }
-      );
-      console.log("Bookings fetched:", res.data.bookings);
-      setBookings(res.data.bookings || []);
-    } catch (error) {
-      console.log("Error fetching bookings:", error);
-    }
-  };
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const res = await axios.get(
+          `${serverUrl}/api/booking/my-bookings`,
+          { withCredentials: true }
+        );
 
-  if (userData) fetchBookings();
-}, [serverUrl, userData]);
-  // Filter bookings by status
-  const filteredBookings =
-    filter === "all"
+        console.log("Bookings fetched:", res.data);
+        console.log(res.data.bookings);
+        // 🔥 SAFE DATA HANDLE
+        const data = res.data.bookings || res.data;
+
+        if (Array.isArray(data)) {
+          setBookings(data);
+        } else {
+          console.log("Data is not array:", data);
+          setBookings([]);
+        }
+
+      } catch (error) {
+        console.log("Error fetching bookings:", error);
+      }
+    };
+
+    if (userData) fetchBookings();
+  }, [serverUrl, userData]);
+
+  // 🔥 SAFE FILTER
+  const filteredBookings = Array.isArray(bookings)
+    ? filter === "all"
       ? bookings
-      : bookings.filter((b) => b.status === filter);
+      : bookings.filter((b) => b.status === filter)
+    : [];
 
   return (
     <div className="min-h-screen bg-slate-900 text-white p-6">
@@ -45,6 +58,7 @@ function MyBookings() {
         >
           All
         </button>
+
         <button
           onClick={() => setFilter("pending")}
           className={`px-4 py-2 rounded ${
@@ -53,18 +67,20 @@ function MyBookings() {
         >
           Pending
         </button>
+
         <button
-          onClick={() => setFilter("accept")}
+          onClick={() => setFilter("accepted")}
           className={`px-4 py-2 rounded ${
-            filter === "accept" ? "bg-green-600" : "bg-slate-700"
+            filter === "accepted" ? "bg-green-600" : "bg-slate-700"
           }`}
         >
           Accepted
         </button>
+
         <button
-          onClick={() => setFilter("reject")}
+          onClick={() => setFilter("rejected")}
           className={`px-4 py-2 rounded ${
-            filter === "reject" ? "bg-red-600" : "bg-slate-700"
+            filter === "rejected" ? "bg-red-600" : "bg-slate-700"
           }`}
         >
           Rejected
@@ -73,7 +89,7 @@ function MyBookings() {
 
       {/* BOOKINGS LIST */}
       <div className="grid md:grid-cols-2 gap-4">
-        {filteredBookings.length === 0 ? (
+        {!Array.isArray(filteredBookings) || filteredBookings.length === 0 ? (
           <p className="text-gray-400">No bookings found.</p>
         ) : (
           filteredBookings.map((booking) => (
@@ -82,15 +98,19 @@ function MyBookings() {
               <p>Provider: {booking.providerId?.name || "N/A"}</p>
               <p>Address: {booking.address}</p>
               <p>
-                Date: {new Date(booking.date).toLocaleString() || "N/A"}
+                Date:{" "}
+                {booking.date
+                  ? new Date(booking.date).toLocaleString()
+                  : "N/A"}
               </p>
+
               <p className="mt-2">
                 Status:{" "}
                 <span
                   className={
-                    booking.status === "accept"
+                    booking.status === "accepted"
                       ? "text-green-400"
-                      : booking.status === "reject"
+                      : booking.status === "rejected"
                       ? "text-red-400"
                       : "text-yellow-400"
                   }

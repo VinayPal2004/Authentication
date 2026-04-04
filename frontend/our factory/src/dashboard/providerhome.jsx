@@ -228,8 +228,8 @@ const handleStatus = async (requestId, status) => {
         Have questions or need help? Reach out to us directly.
       </p>
 
-      <p className="text-gray-300">📧 Email: support@servicehub.com</p>
-      <p className="text-gray-300">📞 Phone: +91 91409 01178</p>
+      <p className="text-gray-300">📧 Email: supportservicehub@gmail.com</p>
+      <p className="text-gray-300">📞 Phone: +91 93556 79054</p>
       <p className="text-gray-300">📍 Location: India</p>
     </div>
 
@@ -241,7 +241,7 @@ const handleStatus = async (requestId, status) => {
         className="w-full bg-green-500 hover:bg-green-600 p-3 rounded font-semibold"
         onClick={() => {
           const msg = "Hello, I want to contact ServiceHub.";
-          window.open(`https://wa.me/919140901178?text=${encodeURIComponent(msg)}`, "_blank");
+          window.open(`https://wa.me/919355679054?text=${encodeURIComponent(msg)}`, "_blank");
         }}
       >
         Chat on WhatsApp
@@ -253,7 +253,7 @@ const handleStatus = async (requestId, status) => {
         onClick={() => {
           const subject = "Contact from ServiceHub";
           const body = "Hello, I want to know more about your services.";
-          window.location.href = `mailto:support@servicehub.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+          window.location.href = `mailto:supportservicehub@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         }}
       >
         Send Email

@@ -1,8 +1,8 @@
 // bookingroutes.js
 import express from 'express';
-import {bookProvider, updateRequestStatus, getProviderHistory, getMyBookings} from "../controller/bookcontroller.js";
+import {bookProvider, updateRequestStatus, getProviderHistory} from "../controller/bookcontroller.js";
 import isAuth from "../middleware/isAuth.js";
-
+import { getMyBookings } from '../controller/mybooking.js';
 const bookingRouter = express.Router();
 
 bookingRouter.post("/create", isAuth, bookProvider);

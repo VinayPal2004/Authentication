@@ -13,6 +13,7 @@ export const bookProvider = async (req, res) => {
       address,
       fee: providerId?.fee,
     });
+    console.log("BOOKING SAVED USER:", req.userId);
 
     res.status(201).json({
       message: "Request submitted",
@@ -40,37 +41,59 @@ export const getProviderHistory = async (req, res) => {
     res.status(500).json({ message: "Error fetching requests" });
   }
 };
+
+
+
+
 export const updateRequestStatus = async (req, res) => {
   try {
     const { requestId, status } = req.body;
-    
+
     const request = await Request.findByIdAndUpdate(
       requestId,
       { status },
       { new: true }
     );
 
+    // 🔍 check existing booking
+    let booking = await Booking.findOne({
+      userId: request.userId,
+      providerId: request.providerId,
+      date: request.date,
+    });
+
+    if (!booking) {
+      // 👉 agar booking exist nahi karti
+      await Booking.create({
+        userId: request.userId,
+        providerId: request.providerId,
+        service: request.service,
+        date: request.date,
+        address: request.address,
+        fee: request.fee,
+        status: status ? status : "pending",
+      });
+
+    } else {
+      // 👉 agar booking already hai → sirf update
+      if (status === "accepted") {
+        booking.status = "accepted";
+      } else if (status === "rejected") {
+        booking.status = "rejected";
+      } else {
+        booking.status = "pending";
+      }
+
+      await booking.save();
+    }
+
     res.status(200).json({
       message: "Status updated",
-      request
+      booking,
     });
 
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Update failed" });
-  }
-};
-// bookingController
-
-
-export const getMyBookings = async (req, res) => {
-  try {
-    const bookings = await Booking.find({ userId: req.userId })
-      .populate("providerId", "name service ")
-      .sort({ createdAt: -1 });
-
-    res.status(200).json({ bookings });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error fetching bookings" });
   }
 };

@@ -8,7 +8,7 @@ const RequestSchema = new mongoose.Schema({
   },
   providerId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: "Provider",
     required: true
   },
   service: {
