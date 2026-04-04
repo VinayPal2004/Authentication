@@ -112,7 +112,7 @@ const handleBooking = async (providerId, service) => {
         <div className="w-40 h-40 rounded-2xl overflow-hidden bg-slate-700 flex items-center justify-center">
         {item.avatar ? (
           <img
-            src={`http://localhost:8400/uploads/${item.avatar}`}
+            src={`https://servicehub02.onrender.com/uploads/${item.avatar}`}
             className="w-full h-full object-cover"
           />
         ) : (

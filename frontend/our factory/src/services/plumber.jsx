@@ -102,16 +102,16 @@ function PlumberPage() {
       </div>
 
               {/* RIGHT IMAGE */}
-              <div className="w-20 h-20 md:w-40 md:h-40 rounded-2xl overflow-hidden bg-slate-700 flex items-center justify-center">
-                {item.avatar ? (
-                  <img
-                    src={`${serverUrl}/uploads/${item.avatar}`}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <CgProfile size={window.innerWidth > 768 ? 40 : 30} className="text-white" />
-                )}
-              </div>
+             <div className="w-40 h-40 rounded-2xl overflow-hidden bg-slate-700 flex items-center justify-center">
+                     {item.avatar ? (
+                       <img
+                         src={`https://servicehub02.onrender.com/uploads/${item.avatar}`}
+                         className="w-full h-full object-cover"
+                       />
+                     ) : (
+                       <CgProfile size={40} className="text-white" />
+                     )}
+                   </div>
             </div>
           ))
         )}
