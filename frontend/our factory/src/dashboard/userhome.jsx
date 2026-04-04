@@ -97,6 +97,17 @@ function UserHome() {
                 </button>
 
                 <button
+                   onClick={() => {
+              document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
+            }}
+                  className="block w-full text-left px-4 py-2 hover:bg-slate-800"
+
+                >
+                  contact us
+                </button>
+
+
+                <button
                   onClick={() => {
                     localStorage.removeItem("token");
                     navigate("/login");
