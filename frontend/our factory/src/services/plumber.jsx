@@ -1,79 +1,87 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { CgProfile } from "react-icons/cg";
 import { AuthDataContext } from "../context/Authcontext";
+import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 
 function PlumberPage() {
   const { serverUrl } = useContext(AuthDataContext);
   const [plumbers, setPlumbers] = useState([]);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Fetch plumbers
   useEffect(() => {
     const fetchPlumbers = async () => {
       try {
         const res = await axios.get(
           `${serverUrl}/api/provider/service/plumber`
         );
-        setPlumbers(res.data.providers || []);
+
+        console.log("API DATA:", res.data); // 
+
+        setPlumbers(res.data.providers || []); // 
+
       } catch (error) {
-        console.log("Error fetching plumbers:", error);
-        setPlumbers([]);
+        console.log("Error fetching plumbers", error);
+        setPlumbers([]); //
       }
     };
+
     fetchPlumbers();
   }, [serverUrl]);
 
-  // Booking handler
-  const handleBooking = async (providerId, service) => {
-    if (loading) return;
-    setLoading(true);
-    try {
-      await axios.post(
-        `${serverUrl}/api/booking/create`,
-        {
-          providerId,
-          service,
-          date: new Date().toISOString(),
-          address: "User Address", // Replace with actual user address if available
-        },
-        { withCredentials: true }
-      );
-      alert("Booking Done ✅");
-      navigate("/user");
-    } catch (error) {
-      console.log("Booking failed:", error);
-      alert("Booking Failed ❌");
-    } finally {
-      setLoading(false);
-    }
-  };
+const [loading, setLoading] = useState(false);
+
+const handleBooking = async (providerId, service) => {
+  if (loading) return;
+
+  setLoading(true);
+  try {
+    await axios.post(
+      `${serverUrl}/api/booking/create`,
+      {
+        providerId,
+        service,
+        date: new Date().toISOString(),
+        address: "User Address",
+        phone: "User Phone"
+      },
+      { withCredentials: true }
+    );
+
+    alert("Booking Done");
+    navigate('/user');
+
+  } catch (error) {
+    console.log("Booking failed", error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white p-4 md:p-10">
-      <h1 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-blue-400">
+    <div className="min-h-screen bg-slate-900 text-white p-10">
+
+      <h1 className="text-3xl font-bold mb-8 text-blue-400">
         Plumbers
       </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+      <div className="grid md:grid-cols-3 gap-6">
+        
         {plumbers.length === 0 ? (
-          <p>No plumbers available</p>
-        ) : (
-          plumbers.map((item) => (
-           <div
+  <p>No plumbers available</p>
+) : (
+  plumbers.map((item) => (
+    <div
       key={item._id}
       className="bg-slate-800 p-5 rounded-xl flex justify-between items-center"
     >
+      
       {/* LEFT SIDE DATA */}
-    
-
       <div>
         <h2 className="text-xl font-semibold">{item.name}</h2>
 
         <p className="text-gray-400">
-          Phone: {item.phone}
+          Phone: {item.Phone}
         </p>
 
         <p className="text-gray-400">
@@ -101,21 +109,24 @@ function PlumberPage() {
         </button>
       </div>
 
-              {/* RIGHT IMAGE */}
-             <div className="w-40 h-40 rounded-2xl overflow-hidden bg-slate-700 flex items-center justify-center">
-                     {item.avatar ? (
-                       <img
-                         src={`https://servicehub02.onrender.com/uploads/${item.avatar}`}
-                         className="w-full h-full object-cover"
-                       />
-                     ) : (
-                       <CgProfile size={40} className="text-white" />
-                     )}
-                   </div>
-            </div>
-          ))
-        )}
+      {/* RIGHT SIDE AVATAR */}
+        <div className="order-1 md:order-2 w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden bg-slate-700 flex items-center justify-center">
+  {item.avatar ? (
+    <img
+      src={`https://servicehub02.onrender.com/uploads/${item.avatar}`}
+      className="w-full h-full object-cover"
+    />
+  ) : (
+    <CgProfile size={40} className="text-white" />
+  )}
+</div>
+
+    </div>
+  ))
+)}
+
       </div>
+
     </div>
   );
 }

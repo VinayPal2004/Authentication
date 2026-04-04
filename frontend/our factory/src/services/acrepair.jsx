@@ -4,13 +4,13 @@ import { AuthDataContext } from "../context/Authcontext";
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 
-function ACrepairPage() {
+function AcRepairPage() {
   const { serverUrl } = useContext(AuthDataContext);
-  const [acRepairers, setACRepairers] = useState([]);
+  const [acRepairs, setAcRepairs] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchACRepairers   = async () => {
+    const fetchAcRepairs = async () => {
       try {
         const res = await axios.get(
           `${serverUrl}/api/provider/service/ac-repair`
@@ -18,15 +18,15 @@ function ACrepairPage() {
 
         console.log("API DATA:", res.data); // 
 
-        setACRepairers(res.data.providers || []); // 
+        setAcRepairs(res.data.providers || []); // 
 
       } catch (error) {
-        console.log("Error fetching AC repairers", error);
-        setACRepairers([]); //
+        console.log("Error fetching acRepairs", error);
+        setAcRepairs([]); //
       }
     };
 
-    fetchACRepairers();
+    fetchAcRepairs();
   }, [serverUrl]);
 
 const [loading, setLoading] = useState(false);
@@ -42,7 +42,8 @@ const handleBooking = async (providerId, service) => {
         providerId,
         service,
         date: new Date().toISOString(),
-        address: "User Address"
+        address: "User Address",
+        phone: "User Phone"
       },
       { withCredentials: true }
     );
@@ -61,15 +62,15 @@ const handleBooking = async (providerId, service) => {
     <div className="min-h-screen bg-slate-900 text-white p-10">
 
       <h1 className="text-3xl font-bold mb-8 text-blue-400">
-        AC Repairers
+        AC Repair Services
       </h1>
 
       <div className="grid md:grid-cols-3 gap-6">
         
-        {acRepairers.length === 0 ? (
-  <p>No AC repairers available</p>
+        {acRepairs.length === 0 ? (
+  <p>No acRepairs available</p>
 ) : (
-  acRepairers.map((item) => (
+  acRepairs.map((item) => (
     <div
       key={item._id}
       className="bg-slate-800 p-5 rounded-xl flex justify-between items-center"
@@ -80,7 +81,7 @@ const handleBooking = async (providerId, service) => {
         <h2 className="text-xl font-semibold">{item.name}</h2>
 
         <p className="text-gray-400">
-          Phone: {item.phone}
+          Phone: {item.Phone}
         </p>
 
         <p className="text-gray-400">
@@ -109,16 +110,16 @@ const handleBooking = async (providerId, service) => {
       </div>
 
       {/* RIGHT SIDE AVATAR */}
-        <div className="w-40 h-40 rounded-2xl overflow-hidden bg-slate-700 flex items-center justify-center">
-        {item.avatar ? (
-          <img
-            src={`https://servicehub02.onrender.com/uploads/${item.avatar}`}
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <CgProfile size={40} className="text-white" />
-        )}
-      </div>
+       <div className="order-1 md:order-2 w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden bg-slate-700 flex items-center justify-center">
+  {item.avatar ? (
+    <img
+      src={`https://servicehub02.onrender.com/uploads/${item.avatar}`}
+      className="w-full h-full object-cover"
+    />
+  ) : (
+    <CgProfile size={40} className="text-white" />
+  )}
+</div>
 
     </div>
   ))
@@ -130,4 +131,4 @@ const handleBooking = async (providerId, service) => {
   );
 }
 
-export default ACrepairPage;
+export default AcRepairPage;

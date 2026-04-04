@@ -42,7 +42,9 @@ const handleBooking = async (providerId, service) => {
         providerId,
         service,
         date: new Date().toISOString(),
-        address: "User Address"
+        address: "User Address",
+        phone: "User Phone"
+
       },
       { withCredentials: true }
     );
@@ -80,7 +82,7 @@ const handleBooking = async (providerId, service) => {
         <h2 className="text-xl font-semibold">{item.name}</h2>
 
         <p className="text-gray-400">
-          Phone: {item.phone}
+          Phone: {item.Phone}
         </p>
 
         <p className="text-gray-400">
@@ -109,16 +111,16 @@ const handleBooking = async (providerId, service) => {
       </div>
 
       {/* RIGHT SIDE AVATAR */}
-        <div className="w-40 h-40 rounded-2xl overflow-hidden bg-slate-700 flex items-center justify-center">
-        {item.avatar ? (
-          <img
-            src={`https://servicehub02.onrender.com/uploads/${item.avatar}`}
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <CgProfile size={40} className="text-white" />
-        )}
-      </div>
+       <div className="order-1 md:order-2 w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden bg-slate-700 flex items-center justify-center">
+  {item.avatar ? (
+    <img
+      src={`https://servicehub02.onrender.com/uploads/${item.avatar}`}
+      className="w-full h-full object-cover"
+    />
+  ) : (
+    <CgProfile size={40} className="text-white" />
+  )}
+</div>
 
     </div>
   ))
