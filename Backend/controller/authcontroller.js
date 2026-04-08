@@ -29,13 +29,14 @@ export const registerUser = async(req,res)=>{
       role
     });
      const token = await generateToken(user._id);
-    res.cookie('token', token, {
+   res.cookie('token', token, {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",       // 🔥 MUST (HTTPS ke liye)
-  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",   // 🔥 MUST (cross-origin ke liye)
+  secure: true,        // 🔥 always true (Vercel + Render = HTTPS)
+  sameSite: "none",    // 🔥 cross-origin ke liye must
   maxAge: 7 * 24 * 60 * 60 * 1000
 });
-      res.status(201).json({message:"User registered successfully",token,user:{id:user._id,name:user.name,email:user.email,role:user.role}});
+      res.status(201).json({message:"User registered successfully",
+        user:{id:user._id,name:user.name,email:user.email,role:user.role}});
      
 
   } catch (error) {
@@ -65,8 +66,8 @@ export const registerUser = async(req,res)=>{
 
         res.cookie('token', token, {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",       // 🔥 MUST (HTTPS ke liye)
-  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",   // 🔥 MUST (cross-origin ke liye)
+  secure: true,        // 🔥 always true (Vercel + Render = HTTPS)
+  sameSite: "none",    // 🔥 cross-origin ke liye must
   maxAge: 7 * 24 * 60 * 60 * 1000
 });
         return res.status(200).json({
