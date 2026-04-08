@@ -21,23 +21,22 @@ connectDB();
 app.use(express.json());
 app.use(cookieParser());
 
-// 🔥 CORS (production ready)
+// 🔥 CORS (FINAL FIX)
 const allowedOrigins = [
   "http://localhost:5173",
   "https://service-hub-wrdt.vercel.app"
 ];
 
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("CORS not allowed: " + origin));
-    }
-  },
-  credentials: true
+  origin: allowedOrigins,
+  credentials: true,
 }));
 
+// 🔥 IMPORTANT: preflight handle karo
+app.options("*", cors({
+  origin: allowedOrigins,
+  credentials: true,
+}));
 // 🔥 Ensure uploads folder exists
 if (!fs.existsSync("uploads")) {
   fs.mkdirSync("uploads");
