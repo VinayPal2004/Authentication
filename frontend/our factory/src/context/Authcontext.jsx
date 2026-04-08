@@ -4,13 +4,8 @@ export const AuthDataContext = createContext();
 
 function Authcontext({children}) 
 {
- let serverUrl;
+ let serverUrl = "https://servicehub02.onrender.com";
 
-if (window.location.hostname === "localhost") {
-  serverUrl = "http://localhost:8400";
-} else {
-  serverUrl = "https://servicehub02.onrender.com";
-}
   console.log('server' ,serverUrl);
   
   let value ={
