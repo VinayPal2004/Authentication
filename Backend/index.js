@@ -34,10 +34,7 @@ app.use(cors({
 }));
 
 // 🔥 IMPORTANT: preflight handle karo
-app.options("*", cors({
-  origin: allowedOrigins,
-  credentials: true,
-}));
+
 // 🔥 Ensure uploads folder exists
 if (!fs.existsSync("uploads")) {
   fs.mkdirSync("uploads");
