@@ -28,7 +28,10 @@ export const registerUser = async(req,res)=>{
       password :hashedPassword,
       role
     });
-     const token = await generateToken(user._id);
+     const token =  generateToken(user._id);
+     if (!token) {
+  return res.status(500).json({ message: "Token generation failed" });
+}
    res.cookie('token', token, {
   httpOnly: true,
   secure: true,        // 🔥 always true (Vercel + Render = HTTPS)
@@ -63,6 +66,9 @@ export const registerUser = async(req,res)=>{
         }
 
         const token = generateToken(user._id);
+        if (!token) {
+  return res.status(500).json({ message: "Token generation failed" });
+}
 
         res.cookie('token', token, {
   httpOnly: true,
