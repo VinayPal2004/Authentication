@@ -3,6 +3,7 @@ import axios from "axios";
 import { AuthDataContext } from "../context/Authcontext";
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 function PlumberPage() {
   const { serverUrl } = useContext(AuthDataContext);
@@ -48,11 +49,12 @@ const handleBooking = async (providerId, service) => {
       { withCredentials: true }
     );
 
-    alert("Booking Done");
+    toast.success("Booking successful");
     navigate('/user');
 
   } catch (error) {
     console.log("Booking failed", error);
+    toast.error("Booking failed");
   } finally {
     setLoading(false);
   }
@@ -113,7 +115,7 @@ const handleBooking = async (providerId, service) => {
         <div className="order-1 md:order-2 w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden bg-slate-700 flex items-center justify-center">
   {item.avatar ? (
     <img
-      src={`https://servicehub02.onrender.com/uploads/${item.avatar}`}
+      src={`${serverUrl}/uploads/${item.avatar}`}
       className="w-full h-full object-cover"
     />
   ) : (
@@ -126,7 +128,7 @@ const handleBooking = async (providerId, service) => {
 )}
 
       </div>
-
+      <ToastContainer />
     </div>
   );
 }

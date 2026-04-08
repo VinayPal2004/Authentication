@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import logo from "../assets/servicehub.png";
 import { useNavigate } from "react-router-dom";
 import { userDataContext } from "../context/Usercontext";
+import { AuthDataContext } from "../context/Authcontext";
 
 function UserHome() {
   const services = [
@@ -16,6 +17,7 @@ function UserHome() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const { userData } = useContext(userDataContext);
+  const { serverUrl } = useContext(AuthDataContext);
   
   return (
     <div className="min-h-screen bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white">
@@ -61,7 +63,7 @@ function UserHome() {
             >
               {userData?.avatar ? (
                 <img
-                  src={`https://servicehub02.onrender.com/uploads/${userData.avatar}`}
+                  src={`${serverUrl}/uploads/${userData.avatar}`}
                   className="w-full h-full object-cover"
                 />
               ) : (

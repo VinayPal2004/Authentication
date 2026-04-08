@@ -1,19 +1,19 @@
-import Booking from "../model/bookingmodel.js";
 import Request from "../model/requestmodel.js";
-
-
 export const getMyBookings = async (req, res) => {
   try {
-    const bookingRequest = await Booking.find({
-      userId: req.userId,
-    })
-      .populate("userId", "name address")
-      .populate("providerId", "name service fee")
-      .sort({ createdAt: -1 });
+    console.log("USER ID:", req.userId); // 🔥 check
 
-    res.status(200).json({ bookings: bookingRequest });
+    const myBookings = await Request.find({
+      userId: req.userId,
+    }).populate("userId", "name address") // 🔥 check if provider details are coming
+    .populate("providerId", "name fee");
+
+    console.log("DATA:", myBookings); // 🔥 check
+
+    res.status(200).json({ bookings: myBookings });
 
   } catch (error) {
+    console.log("FULL ERROR:", error); // 🔥 main cheez
     res.status(500).json({ message: "Error fetching bookings" });
   }
 };

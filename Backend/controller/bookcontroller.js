@@ -1,17 +1,19 @@
 import Request from "../model/requestmodel.js";
-import Booking from "../model/bookingmodel.js";
+import User from "../model/usermodel.js";
+
 
 export const bookProvider = async (req, res) => {
   try {
     const { providerId, service, date, address } = req.body;
-
+    const provider = await User.findById(providerId);
     const newRequest = await Request.create({
       userId: req.userId,
-      providerId: providerId,
+      providerId,
       service,
       date, 
       address,
-      fee: providerId?.fee,
+      fee:provider.fee,
+      status: "pending"
     });
     console.log("BOOKING SAVED USER:", req.userId);
 
@@ -55,41 +57,9 @@ export const updateRequestStatus = async (req, res) => {
       { new: true }
     );
 
-    // 🔍 check existing booking
-    let booking = await Booking.findOne({
-      userId: request.userId,
-      providerId: request.providerId,
-      date: request.date,
-    });
-
-    if (!booking) {
-      // 👉 agar booking exist nahi karti
-      await Booking.create({
-        userId: request.userId,
-        providerId: request.providerId,
-        service: request.service,
-        date: request.date,
-        address: request.address,
-        fee: request.fee,
-        status: status ? status : "pending",
-      });
-
-    } else {
-      // 👉 agar booking already hai → sirf update
-      if (status === "accepted") {
-        booking.status = "accepted";
-      } else if (status === "rejected") {
-        booking.status = "rejected";
-      } else {
-        booking.status = "pending";
-      }
-
-      await booking.save();
-    }
-
     res.status(200).json({
       message: "Status updated",
-      booking,
+      request,
     });
 
   } catch (error) {

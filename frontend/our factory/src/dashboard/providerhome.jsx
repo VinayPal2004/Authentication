@@ -199,14 +199,14 @@ const handleStatus = async (requestId, status) => {
                 <div className="flex flex-col sm:flex-row gap-3">
 
                   <button
-                    onClick={() => handleStatus(req._id, "accept")}
+                    onClick={() => handleStatus(req._id, "accepted")}
                     className="bg-green-600 px-4 py-2 rounded-lg hover:bg-green-700 w-full"
                   >
                     Accept
                   </button>
 
                   <button
-                    onClick={() => handleStatus(req._id, "reject")}
+                    onClick={() => handleStatus(req._id, "rejected")}
                     className="bg-red-600 px-4 py-2 rounded-lg hover:bg-red-700 w-full"
                   >
                     Reject

@@ -96,28 +96,33 @@ function MyBookings() {
             <div key={booking._id} className="bg-slate-800 p-4 rounded">
               <h2 className="text-lg font-semibold">{booking.service}</h2>
               <p>Provider: {booking.providerId?.name || "N/A"}</p>
-              <p>Address: {booking.address}</p>
-              <p>
-                Date:{" "}
-                {booking.date
-                  ? new Date(booking.date).toLocaleString()
-                  : "N/A"}
-              </p>
+              <p>Address: {booking.userId?.address || "N/A"}</p>
+              <p>Fee: ₹{booking.providerId?.fee}</p>
+              <p>Date: {new Date(booking.date).toLocaleDateString("en-IN",{
+                day: "numeric",
+    month: "short",
+    year: "numeric",
+              })}</p>
+<p>Time: {new Date(booking.date).toLocaleTimeString("en-US", {
+   hour: "2-digit",
+    minute: "2-digit",
+})}</p>
 
-              <p className="mt-2">
-                Status:{" "}
-                <span
-                  className={
-                    booking.status === "accepted"
-                      ? "text-green-400"
-                      : booking.status === "rejected"
-                      ? "text-red-400"
-                      : "text-yellow-400"
-                  }
-                >
-                  {booking.status}
-                </span>
-              </p>
+             <p className="mt-2">
+  <span
+    className={
+      booking.status === "accepted"
+        ? "text-green-400"
+        : booking.status === "rejected"
+        ? "text-red-400"
+        : "text-yellow-400"
+    }
+  >
+    {booking.status === "pending" && "⏳ Waiting for provider"}
+    {booking.status === "accepted" && "✅ Booking Confirmed"}
+    {booking.status === "rejected" && "❌ Rejected"}
+  </span>
+</p>
             </div>
           ))
         )}

@@ -113,7 +113,11 @@ function ProviderData() {
 
               <p>
                 Date:{" "}
-                {new Date(req.createdAt).toLocaleString()}
+                {new Date(req.createdAt).toLocaleString("en-IN", {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric"
+                })}
               </p>
 
               <p className="mt-2">

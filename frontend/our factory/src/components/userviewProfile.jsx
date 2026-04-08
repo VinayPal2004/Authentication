@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
 import { userDataContext } from "../context/Usercontext";
 import { useNavigate } from "react-router-dom";
+import { AuthDataContext } from "../context/Authcontext";
 
 function ViewProfile() {
   const { userData } = useContext(userDataContext);
   const navigate = useNavigate();
+    const { serverUrl } = useContext(AuthDataContext);
 
   if (!userData) {
     return (
@@ -29,7 +31,7 @@ function ViewProfile() {
         <div className="flex justify-center mb-4">
           {userData.avatar ? (
             <img
-              src={`https://servicehub02.onrender.com/uploads/${userData.avatar}`}
+              src={`${serverUrl}/uploads/${userData.avatar}`}
               className="w-20 h-20 rounded-full object-cover"
               alt="profile"
             />
