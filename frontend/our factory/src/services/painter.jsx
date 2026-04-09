@@ -51,8 +51,9 @@ const handleBooking = async (providerId, service) => {
     );
 
     toast.success("Booking successful");
-    navigate('/user');
-
+    setTimeout(() => {
+      navigate('/user');
+    }, 1000);
   } catch (error) {
     console.log("Booking failed", error);
     toast.error("Booking failed");

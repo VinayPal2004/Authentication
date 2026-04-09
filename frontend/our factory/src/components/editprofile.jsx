@@ -15,6 +15,11 @@ function EditProfile() {
     name: "",
     Phone: "",
     address: "",
+    city: "",
+    state: "",
+    pincode: "",
+    country: "",
+
     theme: "dark",
   });
 
@@ -27,6 +32,10 @@ function EditProfile() {
         name: userData.name || "",
         Phone: userData.Phone || "",
         address: userData.address || "",
+        city: userData.city || "",
+        state: userData.state || "",
+        pincode: userData.pincode || "",
+        country: userData.country || "",
         theme: userData.theme || "dark",
       });
 
@@ -132,9 +141,45 @@ function EditProfile() {
           name="address"
           value={form.address}
           onChange={handleChange}
-          placeholder="Address"
+          placeholder=" street/ FullAddress"
           className="w-full mt-4 p-2 rounded bg-slate-700"
         />
+        <input
+          type="text"
+          name="city"
+          value={form.city}
+          onChange={handleChange}
+          placeholder="City"
+          className="w-full mt-4 p-2 rounded bg-slate-700"
+        />
+
+        <input
+          type="text"
+          name="state"
+          value={form.state}
+          onChange={handleChange}
+          placeholder="State"
+          className="w-full mt-4 p-2 rounded bg-slate-700"
+        />
+
+        <input
+          type="text"
+          name="pincode"
+          value={form.pincode}
+          onChange={handleChange}
+          placeholder="Pincode"
+          className="w-full mt-4 p-2 rounded bg-slate-700"
+        />
+
+        <input
+          type="text"
+          name="country"
+          value={form.country}
+          onChange={handleChange}
+          placeholder="Country"
+          className="w-full mt-4 p-2 rounded bg-slate-700"
+        />
+
 
         <select
           name="theme"

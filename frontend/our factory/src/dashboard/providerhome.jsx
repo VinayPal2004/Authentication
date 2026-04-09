@@ -186,14 +186,20 @@ const handleStatus = async (requestId, status) => {
                 </p>
 
                 <p className="text-gray-400 text-sm md:text-base">
-                  Location: { req.address|| "N/A"}
+                  Location: { req.userId.location?.city || "N/A" }
                 </p>
                  <p className="text-gray-400 text-sm md:text-base">
-                  Address: {req.userId?.address || "N/A"}
+                  Address: {req.userId.address || "N/A"}
                 </p>
 
                 <p className="text-gray-400 mb-4 text-sm md:text-base">
-                  Date: {new Date(req.date).toLocaleString() }
+                  Date: {new Date(req.createdAt).toLocaleString("en-US", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-3">
