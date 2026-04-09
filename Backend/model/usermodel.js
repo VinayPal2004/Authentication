@@ -22,18 +22,14 @@ const UserSchema = new mongoose.Schema({
 Phone: {
   type: Number
 },
- address: {
-      full: { type: String },   // e.g. "123 Street, Rohini"
-      city: { type: String },   // e.g. "New Delhi"
-      state: { type: String },  // e.g. "Delhi"
-      pincode: { type: String },
-      country: { type: String }   // e.g. "India"
-    },
- location: {
-      city: { type: String },   // e.g. "New Delhi"
-      state: { type: String },  // e.g. "Delhi"
-      pincode: { type: String },
-    },
+address: {
+  full: String,   // "123 Street, Rohini"
+  city: String,   // "New Delhi"
+  state: String,  // "Delhi"
+  pincode: String,
+  country: String // "India"
+},
+ 
 avatar: {
   type: String,
   default: ""

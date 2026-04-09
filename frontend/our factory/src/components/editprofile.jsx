@@ -31,11 +31,11 @@ function EditProfile() {
       setForm({
         name: userData.name || "",
         Phone: userData.Phone || "",
-        address: userData.address || "",
-        city: userData.city || "",
-        state: userData.state || "",
-        pincode: userData.pincode || "",
-        country: userData.country || "",
+         address: userData.address?.full || "",
+  city: userData.address?.city || "",
+  state: userData.address?.state || "",
+  country: userData.address?.country || "",
+  pincode: userData.address?.pincode || "",
         theme: userData.theme || "dark",
       });
 
@@ -74,9 +74,7 @@ function EditProfile() {
         formData,
         {
           withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+          
         }
       );
 
