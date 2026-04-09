@@ -6,7 +6,9 @@ export const getMyBookings = async (req, res) => {
     const myBookings = await Request.find({
       userId: req.userId,
     }).populate("userId", "name address") // 🔥 check if provider details are coming
-    .populate("providerId", "name fee");
+    .populate("providerId", "name fee")
+    .sort({ createdAt: -1, _id: -1 }); // latest first
+    
 
     console.log("DATA:", myBookings); // 🔥 check
 

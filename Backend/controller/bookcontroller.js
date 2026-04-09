@@ -32,9 +32,9 @@ export const getProviderHistory = async (req, res) => {
     const requests = await Request.find({
       providerId: req.userId,
       
-    }).populate("userId", "name")
+    }).populate("userId", "name address")
     .populate("providerId", "name fee")
-    .sort({ createdAt: -1 });
+    .sort({ createdAt: -1, _id: -1 });
 
     res.status(200).json({ requests });
 

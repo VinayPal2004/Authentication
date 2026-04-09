@@ -7,7 +7,8 @@ export const getProviderRequests = async (req, res) => {
     const requests = await Request.find({
       providerId: req.userId,
       status: "pending"
-    }).populate("userId", "name address");
+    }).populate("userId", "name address")
+    .populate("providerId", "name fee").sort({ createdAt: -1 });
     res.status(200).json({ requests });
     console.log(requests);
 

@@ -31,12 +31,12 @@ function EditProfile() {
       setForm({
         name: userData.name || "",
         Phone: userData.Phone || "",
-         address: userData.address || "",
-         city: "",
-  state: "",
-  country: "",
-  pincode: "",
-        theme: userData.theme || "dark",
+          address: userData.address.full || "",
+          city: userData.address.city || "",
+          state: userData.address.state || "",
+          country: userData.address.country || "",
+          pincode: userData.address.pincode || "",
+          theme: userData.theme || "dark",
       });
 
       if (userData.avatar) {

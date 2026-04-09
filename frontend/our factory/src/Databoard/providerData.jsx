@@ -46,7 +46,7 @@ function ProviderData() {
     : requests.filter((r) => r.status.toLowerCase() === filter);
   //  earnings
   const totalEarnings = requests
-    .filter((r) => r.status === "accept")
+    .filter((r) => r.status === "accepted")
     .reduce((sum,r) => sum + (r.providerId?.fee || 0), 0);
 
   return (
@@ -76,18 +76,18 @@ function ProviderData() {
         </button>
 
         <button
-          onClick={() => setFilter("accept")}
+          onClick={() => setFilter("accepted")}
           className={`px-4 py-2 rounded ${
-            filter === "accept" ? "bg-green-600" : "bg-slate-700"
+            filter === "accepted" ? "bg-green-600" : "bg-slate-700"
           }`}
         >
           Accepted
         </button>
 
         <button
-          onClick={() => setFilter("reject")}
+          onClick={() => setFilter("rejected")}
           className={`px-4 py-2 rounded ${
-            filter === "reject" ? "bg-red-600" : "bg-slate-700"
+            filter === "rejected" ? "bg-red-600" : "bg-slate-700"
           }`}
         >
           Rejected
@@ -109,8 +109,9 @@ function ProviderData() {
               </h3>
 
               <p>Customer: {req.userId?.name}</p>
-              <p>Address: {req.address}</p>
-
+                <p>Location: { req.userId.address?.city || "N/A" } , {req.userId.address?.state || ""}</p>
+                 <p>Address: {req.userId.address?.full || "N/A"}</p>
+                  <p>fee: ₹ {req.providerId?.fee}</p>
               <p>
                 Date:{" "}
                 {new Date(req.createdAt).toLocaleString("en-IN", {

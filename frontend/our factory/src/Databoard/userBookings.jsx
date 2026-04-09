@@ -96,7 +96,7 @@ function MyBookings() {
             <div key={booking._id} className="bg-slate-800 p-4 rounded">
               <h2 className="text-lg font-semibold">{booking.service}</h2>
               <p>Provider: {booking.providerId?.name || "N/A"}</p>
-              <p>Address: {booking.userId?.address || "N/A"}</p>
+              <p>Address: {booking.userId?.address?.full || "N/A"}</p>
               <p>Fee: ₹{booking.providerId?.fee}</p>
               <p>Date: {new Date(booking.date).toLocaleDateString("en-IN",{
                 day: "numeric",

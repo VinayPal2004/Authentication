@@ -74,6 +74,60 @@ function ViewProfile() {
             className="w-full p-3 mt-1 rounded bg-slate-700 text-white outline-none"
           />
         </div>
+        {/* Address */}
+<div className="mb-4">
+  <label className="text-gray-400 text-sm">Address</label>
+  <input
+    type="text"
+    value={userData.address?.full || ""}
+    readOnly
+    className="w-full p-3 mt-1 rounded bg-slate-700 text-white outline-none"
+  />
+</div>
+
+{/* City */}
+<div className="mb-4">
+  <label className="text-gray-400 text-sm">City</label>
+  <input
+    type="text"
+    value={userData.address?.city || ""}
+    readOnly
+    className="w-full p-3 mt-1 rounded bg-slate-700 text-white outline-none"
+  />
+</div>
+
+{/* State */}
+<div className="mb-4">
+  <label className="text-gray-400 text-sm">State</label>
+  <input
+    type="text"
+    value={userData.address?.state || ""}
+    readOnly
+    className="w-full p-3 mt-1 rounded bg-slate-700 text-white outline-none"
+  />
+</div>
+
+{/* Country */}
+<div className="mb-4">
+  <label className="text-gray-400 text-sm">Country</label>
+  <input
+    type="text"
+    value={userData.address?.country || ""}
+    readOnly
+    className="w-full p-3 mt-1 rounded bg-slate-700 text-white outline-none"
+  />
+</div>
+
+{/* Pincode */}
+<div className="mb-4">
+  <label className="text-gray-400 text-sm">Pincode</label>
+  <input
+    type="text"
+    value={userData.address?.pincode || ""}
+    readOnly
+    className="w-full p-3 mt-1 rounded bg-slate-700 text-white outline-none"
+  />
+</div>
 
         {/* Provider-specific fields */}
         {isProvider && (

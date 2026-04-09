@@ -186,10 +186,10 @@ const handleStatus = async (requestId, status) => {
                 </p>
 
                 <p className="text-gray-400 text-sm md:text-base">
-                  Location: { req.userId.location?.city || "N/A" }
+                  Location: { req.userId.address?.city || "N/A" } , {req.userId.address?.state || ""}
                 </p>
                  <p className="text-gray-400 text-sm md:text-base">
-                  Address: {req.userId.address || "N/A"}
+                  Address: {req.userId.address?.full || "N/A"}
                 </p>
 
                 <p className="text-gray-400 mb-4 text-sm md:text-base">
