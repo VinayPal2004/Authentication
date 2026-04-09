@@ -45,14 +45,14 @@ function MyBookings() {
     : [];
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white p-6">
+    <div className="min-h-screen bg-slate-900 text-white p-6 overflow-x-hidden">
       <h1 className="text-3xl font-bold mb-6 text-blue-400">My Bookings</h1>
 
       {/* FILTER BUTTONS */}
-      <div className="flex gap-3 mb-6">
+      <div className="flex gap-3 mb-6 overflow-x-auto">
         <button
           onClick={() => setFilter("all")}
-          className={`px-4 py-2 rounded ${
+          className={`px-3 py-2 rounded flex-shrink-0 whitespace-nowrap ${
             filter === "all" ? "bg-blue-600" : "bg-slate-700"
           }`}
         >
@@ -61,7 +61,7 @@ function MyBookings() {
 
         <button
           onClick={() => setFilter("pending")}
-          className={`px-4 py-2 rounded ${
+          className={`px-3 py-2 rounded  flex-shrink-0 whitespace-nowrap ${
             filter === "pending" ? "bg-yellow-500" : "bg-slate-700"
           }`}
         >
@@ -70,7 +70,7 @@ function MyBookings() {
 
         <button
           onClick={() => setFilter("accepted")}
-          className={`px-4 py-2 rounded ${
+          className={`px-3 py-2 rounded flex-shrink-0 whitespace-nowrap ${
             filter === "accepted" ? "bg-green-600" : "bg-slate-700"
           }`}
         >
@@ -79,7 +79,7 @@ function MyBookings() {
 
         <button
           onClick={() => setFilter("rejected")}
-          className={`px-4 py-2 rounded ${
+          className={`px-3 py-2 rounded flex-shrink-0 whitespace-nowrap ${
             filter === "rejected" ? "bg-red-600" : "bg-slate-700"
           }`}
         >
