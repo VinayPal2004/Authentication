@@ -18,7 +18,7 @@ export const editProfile = async (req, res) => {
 
     let updateData = { name, email,Phone,
       address:{
-        full,
+        full:address,
         city,
         state,
         country,
