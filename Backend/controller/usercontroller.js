@@ -14,9 +14,16 @@ export const getCurrentUser = async (req, res) => {
 }
 export const editProfile = async (req, res) => {
   try {
-    const { name, email,Phone,address} = req.body;
+    const { name, email,Phone,address,city,state,country,pincode } = req.body;
 
-    let updateData = { name, email,Phone,address };
+    let updateData = { name, email,Phone,
+      address:{
+        full,
+        city,
+        state,
+        country,
+        pincode 
+      } };
 
    
     if (req.file) {
