@@ -83,7 +83,7 @@ Service-Hub/
 ## Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/service-hub.git
+git clone https://github.com/VinayPal2004/service-hub.git
 ```
 
 ```bash
@@ -107,9 +107,7 @@ npm install
 Create a `.env` file
 
 ```env
-PORT=5000
-MONGO_URI=your_mongodb_connection
-JWT_SECRET=your_secret_key
+
 ```
 
 Run backend
