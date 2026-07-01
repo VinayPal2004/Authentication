@@ -245,7 +245,7 @@ This project is licensed under the MIT License.
 **Vinay Pal**
 
 - GitHub: https://github.com/VinayPal2004
-- Email: your-email@example.com
+- Email: vpal92780@gmail.com
 
 ---
 
